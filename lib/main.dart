@@ -12,9 +12,7 @@ class SHrms extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
-      designSize: const Size(360, 690),
-      minTextAdapt: true,
-      splitScreenMode: true,
+      designSize: const Size(360, 780),
       builder: (BuildContext context) {
         return const MaterialApp(
           // Use this line to prevent extra rebuilds

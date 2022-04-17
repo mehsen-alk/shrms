@@ -12,7 +12,7 @@ class Box extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         color: Colors.teal,
-        borderRadius: BorderRadius.circular(20.0),
+        borderRadius: BorderRadius.circular(20.r),
       ),
       width: 120.w,
       height: 120.w,
@@ -22,9 +22,9 @@ class Box extends StatelessWidget {
         },
         child: Text(
           text,
-          style: const TextStyle(
+          style: TextStyle(
             color: Colors.black,
-            fontSize: 20,
+            fontSize: 20.sp,
           ),
           textAlign: TextAlign.center,
         ),
