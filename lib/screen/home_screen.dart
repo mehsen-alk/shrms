@@ -15,18 +15,15 @@ class HomeScreen extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 250),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Box(text: "Employee", onPress: () {}),
-                  const SizedBox(
-                    width: 10.0,
-                  ),
-                  Box(text: "Edit Employee", onPress: () {}),
-                ],
-              ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Box(text: "Employee", onPress: () {}),
+                const SizedBox(
+                  width: 10.0,
+                ),
+                Box(text: "Edit Employee", onPress: () {}),
+              ],
             ),
           ],
         ),
