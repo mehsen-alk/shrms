@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:shrms/views/components/box_button.dart';
 
-class EmployeeScreen extends StatelessWidget {
-  const EmployeeScreen({Key? key}) : super(key: key);
-
+class HomeScreen extends StatelessWidget {
+  const HomeScreen({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -14,9 +13,8 @@ class EmployeeScreen extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Box(text: "Add Employee", onPress: () {}),
-            Box(text: "Edit Employee", onPress: () {}),
-            Box(text: "Show Employee", onPress: () {}),
+            Box(text: "Employees", onPress: () {}),
+            Box(text: "Weeks", onPress: () {}),
           ],
         ),
       ),
