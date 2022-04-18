@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:shrms/screen/employee_screen.dart';
+import 'package:shrms/views/screen/employee_screen.dart';
 
 void main() async {
-  runApp(const SHrms());
+  runApp(const SHRMS());
 }
 
-class SHrms extends StatelessWidget {
-  const SHrms({Key? key}) : super(key: key);
+class SHRMS extends StatelessWidget {
+  const SHRMS({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

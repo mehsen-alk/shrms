@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:shrms/components/box_button.dart';
+import '../components/box_button.dart';
 
 class EmployeeScreen extends StatelessWidget {
   const EmployeeScreen({Key? key}) : super(key: key);
