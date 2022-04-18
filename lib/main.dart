@@ -17,7 +17,7 @@ class SHrms extends StatelessWidget {
         return MaterialApp(
           // Use this line to prevent extra rebuilds
           useInheritedMediaQuery: true,
-          home: const HomeScreen(),
+          home: const EmployeeScreen(),
           theme: ThemeData(
             primaryColor: const Color(0XFF329D9C),
             appBarTheme: const AppBarTheme(
