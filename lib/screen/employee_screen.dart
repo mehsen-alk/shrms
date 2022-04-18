@@ -15,17 +15,11 @@ class HomeScreen extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Box(text: "Employee", onPress: () {}),
-                SizedBox(
-                  width: 10.h,
-                ),
-                Box(text: "Edit Employee", onPress: () {}),
-              ],
-            ),
             Box(text: "Add Employee", onPress: () {}),
+            SizedBox(
+              height: 10.h,
+            ),
+            Box(text: "Edit Employee", onPress: () {}),
           ],
         ),
       ),

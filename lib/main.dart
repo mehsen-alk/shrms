@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:shrms/screen/home_screen.dart';
+import 'package:shrms/screen/employee_screen.dart';
 
 void main() async {
   runApp(const SHrms());

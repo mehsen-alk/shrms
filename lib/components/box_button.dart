@@ -15,7 +15,7 @@ class Box extends StatelessWidget {
         text,
         style: TextStyle(
           color: Colors.white,
-          fontSize: 20.sp,
+          fontSize: 25.sp,
           fontWeight: FontWeight.bold,
         ),
         textAlign: TextAlign.center,
@@ -25,10 +25,10 @@ class Box extends StatelessWidget {
           const Color(0XFF56C596),
         ),
         fixedSize: MaterialStateProperty.all<Size>(
-          Size(130.w, 130.w),
+          Size(300.w, 50.w),
         ),
         shape: MaterialStateProperty.all<OutlinedBorder>(
-          const CircleBorder(),
+          RoundedRectangleBorder(borderRadius: BorderRadius.circular(15.h)),
         ),
       ),
     );
