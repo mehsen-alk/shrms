@@ -9,24 +9,26 @@ class Box extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        color: Colors.teal,
-        borderRadius: BorderRadius.circular(20.r),
+    return ElevatedButton(
+      onPressed: onPress(),
+      child: Text(
+        text,
+        style: TextStyle(
+          color: Colors.white,
+          fontSize: 20.sp,
+          fontWeight: FontWeight.bold,
+        ),
+        textAlign: TextAlign.center,
       ),
-      width: 120.w,
-      height: 120.w,
-      child: TextButton(
-        onPressed: () {
-          onPress();
-        },
-        child: Text(
-          text,
-          style: TextStyle(
-            color: Colors.black,
-            fontSize: 20.sp,
-          ),
-          textAlign: TextAlign.center,
+      style: ButtonStyle(
+        backgroundColor: MaterialStateProperty.all<Color>(
+          const Color(0XFF56C596),
+        ),
+        fixedSize: MaterialStateProperty.all<Size>(
+          Size(130.w, 130.w),
+        ),
+        shape: MaterialStateProperty.all<OutlinedBorder>(
+          const CircleBorder(),
         ),
       ),
     );

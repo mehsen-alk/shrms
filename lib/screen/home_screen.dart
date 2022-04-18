@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:shrms/components/box_button.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -8,8 +9,7 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.teal,
-        title: const Text("SHrms"),
+        title: const Text("SHRMS"),
       ),
       body: Center(
         child: Column(
@@ -19,12 +19,13 @@ class HomeScreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Box(text: "Employee", onPress: () {}),
-                const SizedBox(
-                  width: 10.0,
+                SizedBox(
+                  width: 10.h,
                 ),
                 Box(text: "Edit Employee", onPress: () {}),
               ],
             ),
+            Box(text: "Add Employee", onPress: () {}),
           ],
         ),
       ),

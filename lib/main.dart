@@ -14,10 +14,16 @@ class SHrms extends StatelessWidget {
     return ScreenUtilInit(
       designSize: const Size(360, 780),
       builder: (BuildContext context) {
-        return const MaterialApp(
+        return MaterialApp(
           // Use this line to prevent extra rebuilds
           useInheritedMediaQuery: true,
-          home: HomeScreen(),
+          home: const HomeScreen(),
+          theme: ThemeData(
+            primaryColor: const Color(0XFF329D9C),
+            appBarTheme: const AppBarTheme(
+              color: Color(0XFF329D9C),
+            ),
+          ),
         );
       },
     );
