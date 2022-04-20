@@ -75,30 +75,31 @@ class AddEmployee extends StatelessWidget {
                       },
                       keyboardType: TextInputType.number,
                       decoration: InputDecoration(
-                          labelText: "Salary",
-                          labelStyle: TextStyle(
-                            color: const Color(0XFF329D9C),
-                            fontSize: 18.sp,
+                        labelText: "Salary",
+                        labelStyle: TextStyle(
+                          color: const Color(0XFF329D9C),
+                          fontSize: 18.sp,
+                        ),
+                        border: const OutlineInputBorder(
+                          borderSide: BorderSide(
+                            color: Color(0XFF56C596),
                           ),
-                          border: const OutlineInputBorder(
-                            borderSide: BorderSide(
-                              color: Color(0XFF56C596),
-                            ),
+                        ),
+                        prefixIcon: const Icon(
+                          Icons.account_balance_wallet_outlined,
+                          color: Color(0XFF329D9C),
+                        ),
+                        focusedBorder: const OutlineInputBorder(
+                          borderSide: BorderSide(
+                            color: Color(0XFF56C596),
                           ),
-                          prefixIcon: const Icon(
-                            Icons.account_balance_wallet_outlined,
-                            color: Color(0XFF329D9C),
+                        ),
+                        enabledBorder: const OutlineInputBorder(
+                          borderSide: BorderSide(
+                            color: Color(0XFF56C596),
                           ),
-                          focusedBorder: const OutlineInputBorder(
-                            borderSide: BorderSide(
-                              color: Color(0XFF56C596),
-                            ),
-                          ),
-                          enabledBorder: const OutlineInputBorder(
-                            borderSide: BorderSide(
-                              color: Color(0XFF56C596),
-                            ),
-                          )),
+                        ),
+                      ),
                       validator: (String? salary) {
                         if (salary == null || salary == '' || salary.isEmpty) {
                           return "Can't be empty";
