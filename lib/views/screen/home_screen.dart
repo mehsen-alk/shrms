@@ -1,26 +1,29 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:shrms/views/components/box_button.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text("SHRMS"),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Box(
-              text: "Employee",
-              onPress: () => Navigator.pushNamed(context, 'EmployeeScreen'),
-            ),
-            Box(text: "Weeks", onPress: () {}),
-          ],
+    return ScreenUtilInit(builder: (BuildContext context) {
+      return Scaffold(
+        appBar: AppBar(
+          title: const Text("SHRMS"),
         ),
-      ),
-    );
+        body: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Box(
+                text: "Employee",
+                onPress: () => Navigator.pushNamed(context, 'EmployeeScreen'),
+              ),
+              Box(text: "Weeks", onPress: () {}),
+            ],
+          ),
+        ),
+      );
+    });
   }
 }
