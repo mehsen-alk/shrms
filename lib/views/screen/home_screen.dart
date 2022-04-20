@@ -13,7 +13,10 @@ class HomeScreen extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Box(text: "Employees", onPress: () {}),
+            Box(
+              text: "Employee",
+              onPress: () => Navigator.pushNamed(context, 'EmployeeScreen'),
+            ),
             Box(text: "Weeks", onPress: () {}),
           ],
         ),
