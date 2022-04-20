@@ -3,7 +3,10 @@ import 'package:shrms/models/employee.dart';
 
 class EmployeeFirestoreHelper {
   static FirebaseFirestore firestore = FirebaseFirestore.instance;
-  final employeesCollection = firestore.collection('Employees');
+  final CollectionReference employeesCollection =
+      firestore.collection('Employees');
+  final nameFieldPath = 'name';
+  final salaryFieldPath = 'salary';
 
   /// return a snapshot to use it inside stream builder
   ///
@@ -13,7 +16,7 @@ class EmployeeFirestoreHelper {
   ///    List<Text> employees = [];
   ///    if (snapshot.hasData) {
   ///      snapshot.data?.docs.forEach((employee) {
-  ///        employees.add(Text(employee['name']));
+  ///        employees.add(Text(employee[nameFieldPath]));
   ///      });
   ///    }
   ///    return Expanded(
@@ -28,11 +31,11 @@ class EmployeeFirestoreHelper {
   /// var f = EmployeeFirestoreHelper().getEmployees();
   /// f.forEach((querySnapshot) {
   ///   for (var doc in querySnapshot.docs) {
-  ///     print('name: ${doc['name']}');
-  ///     print('salary: ${doc['salary']}');
+  ///     print('name: ${doc[nameFieldPath]}');
+  ///     print('salary: ${doc[salaryFieldPath]}');
   /// }
   /// });
-  Stream<QuerySnapshot<Map<String, dynamic>>> getEmployees() {
+  Stream<QuerySnapshot<Object?>> getEmployees() {
     return employeesCollection.snapshots();
   }
 
@@ -45,19 +48,18 @@ class EmployeeFirestoreHelper {
             .get()
             .then((value) => value.size)) ==
         0) {
-      return await employeesCollection
-          .doc('1')
-          .set({'name': employee.name, 'salary': employee.salary});
+      return await employeesCollection.doc('1').set(
+          {nameFieldPath: employee.name, salaryFieldPath: employee.salary});
     }
     await employeesCollection
         .doc('${int.parse(await getLastID()) + 1}')
-        .set({'name': employee.name, 'salary': employee.salary});
+        .set({nameFieldPath: employee.name, salaryFieldPath: employee.salary});
   }
 
   void editEmployee({required String id, required Employee employee}) {
     employeesCollection
         .doc(id)
-        .set({'name': employee.name, 'salary': employee.salary});
+        .set({nameFieldPath: employee.name, salaryFieldPath: employee.salary});
   }
 
   void deleteEmployee({required String id}) {

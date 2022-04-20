@@ -1,6 +1,7 @@
 class Employee {
-  Employee({required this.name, required this.salary});
+  Employee({this.id = '', this.name = '', this.salary = 0});
 
+  String id;
   String name;
   int salary;
 }
