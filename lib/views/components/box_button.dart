@@ -11,7 +11,7 @@ class Box extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.all(5.sp),
       child: ElevatedButton(
-        onPressed: onPress(),
+        onPressed: () => onPress(),
         child: Text(
           text,
           style: TextStyle(
