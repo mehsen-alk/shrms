@@ -35,28 +35,29 @@ class AddEmployee extends StatelessWidget {
                       },
                       keyboardType: TextInputType.text,
                       decoration: InputDecoration(
-                          labelText: "Name",
-                          labelStyle: TextStyle(
-                              color: const Color(0XFF329D9C), fontSize: 18.sp),
-                          border: const OutlineInputBorder(
-                            borderSide: BorderSide(
-                              color: Color(0XFF56C596),
-                            ),
+                        labelText: "Name",
+                        labelStyle: TextStyle(
+                            color: const Color(0XFF329D9C), fontSize: 18.sp),
+                        border: const OutlineInputBorder(
+                          borderSide: BorderSide(
+                            color: Color(0XFF56C596),
                           ),
-                          prefixIcon: const Icon(
-                            Icons.person,
-                            color: Color(0XFF329D9C),
+                        ),
+                        prefixIcon: const Icon(
+                          Icons.person,
+                          color: Color(0XFF329D9C),
+                        ),
+                        focusedBorder: const OutlineInputBorder(
+                          borderSide: BorderSide(
+                            color: Color(0XFF56C596),
                           ),
-                          focusedBorder: const OutlineInputBorder(
-                            borderSide: BorderSide(
-                              color: Color(0XFF56C596),
-                            ),
+                        ),
+                        enabledBorder: const OutlineInputBorder(
+                          borderSide: BorderSide(
+                            color: Color(0XFF56C596),
                           ),
-                          enabledBorder: const OutlineInputBorder(
-                            borderSide: BorderSide(
-                              color: Color(0XFF56C596),
-                            ),
-                          )),
+                        ),
+                      ),
                       validator: (String? name) {
                         if (name == null || name == '' || name.isEmpty) {
                           return "Can't be empty";
