@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:shrms/data/firestore/employees_firestore_helper.dart';
+import 'package:shrms/models/employee.dart';
 import 'package:shrms/views/components/employee_bubble.dart';
 
 class EmployeeScreen extends StatefulWidget {
@@ -31,13 +32,14 @@ class _EmployeeScreenState extends State<EmployeeScreen> {
                   final List<QueryDocumentSnapshot<Object?>>? employees =
                       snapshot.data?.docs;
                   for (var employee in employees!) {
-                    final employeeName = employee['name'];
-                    final employeeID = employee.id;
-                    final employeeSalary = employee['salary'];
+                    Employee employee1 = Employee(
+                      id: employee.id,
+                      name: employee['name'],
+                      salary: employee['salary'],
+                    );
                     final employeeBubble = EmployeeBubble(
-                        name: employeeName,
-                        id: employeeID,
-                        salary: employeeSalary);
+                      employee: employee1,
+                    );
                     employeeBubbles.add(employeeBubble);
                   }
                 }

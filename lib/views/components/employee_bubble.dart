@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:shrms/models/employee.dart';
 
 class EmployeeBubble extends StatelessWidget {
-  final String name;
-  final String id;
-  final int salary;
-  const EmployeeBubble(
-      {Key? key, required this.name, required this.id, required this.salary})
-      : super(key: key);
+  final Employee employee;
+  const EmployeeBubble({
+    Key? key,
+    required this.employee,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +36,7 @@ class EmployeeBubble extends StatelessWidget {
               textBaseline: TextBaseline.alphabetic,
               children: [
                 Text(
-                  "ID: $id",
+                  "ID: ${employee.id}",
                   style: TextStyle(
                     color: Colors.white,
                     fontWeight: FontWeight.bold,
@@ -44,7 +44,7 @@ class EmployeeBubble extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  "Name: $name",
+                  "Name: ${employee.name}",
                   style: TextStyle(
                     color: Colors.white,
                     fontWeight: FontWeight.bold,
@@ -52,7 +52,7 @@ class EmployeeBubble extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  "Salary: $salary",
+                  "Salary: ${employee.salary}",
                   style: TextStyle(
                     color: Colors.white,
                     fontWeight: FontWeight.bold,
