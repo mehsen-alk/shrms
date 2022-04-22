@@ -52,7 +52,7 @@ class EmployeeFirestoreHelper {
           {nameFieldPath: employee.name, salaryFieldPath: employee.salary});
     }
     await employeesCollection
-        .doc('${int.parse(await getLastID()) + 1}')
+        .doc('${int.parse(await getIDs().then((value) => value.last)) + 1}')
         .set({nameFieldPath: employee.name, salaryFieldPath: employee.salary});
   }
 
@@ -66,7 +66,15 @@ class EmployeeFirestoreHelper {
     employeesCollection.doc(id).delete();
   }
 
-  Future<String> getLastID() async {
-    return employeesCollection.get().then((value) => value.docs.last.id);
+  /// get list of ids for the existing employees
+  Future<List<String>> getIDs() async {
+    List<String> ids = [];
+    await employeesCollection
+        .get()
+        .then((employees) => employees.docs.forEach((employee) {
+              ids.add(employee.id);
+            }));
+    ids.sort((a, b) => int.parse(a).compareTo(int.parse(b)));
+    return ids;
   }
 }
