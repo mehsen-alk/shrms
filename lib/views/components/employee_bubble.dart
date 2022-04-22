@@ -14,7 +14,10 @@ class EmployeeBubble extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 10.sp, vertical: 5.sp),
       child: Container(
-        color: const Color(0XFF56C596),
+        decoration: BoxDecoration(
+          color: const Color(0XFF56C596),
+          borderRadius: BorderRadius.circular(20.sp),
+        ),
         child: Row(
           children: [
             Padding(
@@ -29,6 +32,8 @@ class EmployeeBubble extends StatelessWidget {
               ),
             ),
             Column(
+              crossAxisAlignment: CrossAxisAlignment.baseline,
+              textBaseline: TextBaseline.alphabetic,
               children: [
                 Text(
                   "ID: $id",

@@ -47,17 +47,11 @@ class _EmployeeScreenState extends State<EmployeeScreen> {
                 );
               },
             ),
-            // Padding(
-            //   padding: EdgeInsets.all(18.sp),
-            //   child: Container(
-            //     alignment: Alignment.bottomRight,
-            //     child: FloatingActionButton(
-            //       onPressed: () => Navigator.pushNamed(context, 'AddEmployee'),
-            //       child: const Icon(Icons.add),
-            //     ),
-            //   ),
-            // )
           ],
+        ),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () => Navigator.pushNamed(context, 'AddEmployee'),
+          child: const Icon(Icons.add),
         ),
       );
     });
