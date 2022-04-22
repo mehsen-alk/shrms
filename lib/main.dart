@@ -5,6 +5,7 @@ import 'package:shrms/views/screen/add_employee_screen.dart';
 import 'package:shrms/views/screen/employee_screen.dart';
 import 'package:shrms/views/screen/home_screen.dart';
 
+// hi
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
