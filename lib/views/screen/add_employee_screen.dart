@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:shrms/data/firestore/employees_firestore_helper.dart';
 import 'package:shrms/models/employee.dart';
 import 'package:shrms/views/components/box_button.dart';
-import '../../data/firestore/employees_firestore_helper.dart';
 
 class AddEmployee extends StatelessWidget {
   const AddEmployee({Key? key}) : super(key: key);
@@ -124,6 +124,7 @@ class AddEmployee extends StatelessWidget {
                               Employee(name: name, salary: salary);
                           employeeFirestoreHelper.addEmployee(
                               employee: employee);
+                          Navigator.pop(context);
                         }
                       }),
                 ],

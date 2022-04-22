@@ -11,7 +11,7 @@ class EmployeeFirestoreHelper {
   /// return a snapshot to use it inside stream builder
   ///
   /// StreamBuilder<QuerySnapshot>(
-  ///  stream: FireStoreHelper().getEmployees(),
+  ///  stream: EmployeeFirestoreHelper().getEmployees(),
   ///  builder: (context, snapshot) {
   ///    List<Text> employees = [];
   ///    if (snapshot.hasData) {
