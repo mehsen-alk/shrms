@@ -22,19 +22,18 @@ class _EmployeeScreenState extends State<EmployeeScreen> {
         ),
         body: Column(
           children: [
-            StreamBuilder(
+            StreamBuilder<QuerySnapshot>(
               stream: employeeFirestoreHelper.getEmployees(),
-              builder: (BuildContext context, AsyncSnapshot snapshot) {
+              builder: (BuildContext context,
+                  AsyncSnapshot<QuerySnapshot> snapshot) {
                 List<EmployeeBubble> employeeBubbles = [];
                 if (snapshot.hasData) {
-                  final employees = snapshot.data.docs.reversed;
-                  for (var employee in employees) {
-                    final employeeName = employee.data()['name'];
-                    final employeeID = FirebaseFirestore.instance
-                        .collection('Employees')
-                        .doc()
-                        .id;
-                    final employeeSalary = employee.data()['salary'];
+                  final List<QueryDocumentSnapshot<Object?>>? employees =
+                      snapshot.data?.docs;
+                  for (var employee in employees!) {
+                    final employeeName = employee['name'];
+                    final employeeID = employee.id;
+                    final employeeSalary = employee['salary'];
                     final employeeBubble = EmployeeBubble(
                         name: employeeName,
                         id: employeeID,
