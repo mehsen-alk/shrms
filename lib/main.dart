@@ -20,7 +20,7 @@ class SHRMS extends StatelessWidget {
     return ScreenUtilInit(
       builder: (BuildContext context) {
         return MaterialApp(
-          initialRoute: 'HomeScreen',
+          initialRoute: HomeScreen.id,
           theme: ThemeData(
             primaryColor: const Color(0XFF329D9C),
             appBarTheme: const AppBarTheme(
@@ -28,9 +28,9 @@ class SHRMS extends StatelessWidget {
             ),
           ),
           routes: {
-            'HomeScreen': (context) => const HomeScreen(),
-            'EmployeeScreen': (context) => const EmployeeScreen(),
-            'AddEmployee': (context) => const AddEmployee(),
+            HomeScreen.id: (context) => const HomeScreen(),
+            EmployeeScreen.id: (context) => const EmployeeScreen(),
+            AddEmployee.id: (context) => const AddEmployee(),
           },
         );
       },
