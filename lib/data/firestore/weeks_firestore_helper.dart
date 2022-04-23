@@ -11,13 +11,11 @@ class WeeksFirestoreHelper {
 
   /// add an empty work-week
   void addWeek() async {
-    print('inside add week');
     // check if the collection weeks exist if not create it
     // because there is no directly way to do that, we check if there is an document
     // in the collection by check its size
     if ((await weeksCollection.limit(1).get().then((value) => value.size)) ==
         0) {
-      print('inside if');
       return weeksCollection.doc('1').set({'none': null});
     }
     await weeksCollection
@@ -25,7 +23,7 @@ class WeeksFirestoreHelper {
         .set({'none': null});
   }
 
-  /// get list of ids for the existing weeks
+  /// get list of weeks id
   Future<List<String>> getIDs() async {
     List<String> ids = [];
     await weeksCollection.get().then((weeks) => weeks.docs.forEach((week) {
