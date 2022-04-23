@@ -4,8 +4,10 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:shrms/data/firestore/employees_firestore_helper.dart';
 import 'package:shrms/models/employee.dart';
 import 'package:shrms/views/components/employee_bubble.dart';
+import 'package:shrms/views/screen/add_employee_screen.dart';
 
 class EmployeeScreen extends StatefulWidget {
+  static const String id = 'EmployeeScreen';
   const EmployeeScreen({Key? key}) : super(key: key);
 
   @override
@@ -51,7 +53,7 @@ class _EmployeeScreenState extends State<EmployeeScreen> {
           ],
         ),
         floatingActionButton: FloatingActionButton(
-          onPressed: () => Navigator.pushNamed(context, 'AddEmployee'),
+          onPressed: () => Navigator.pushNamed(context, AddEmployee.id),
           child: const Icon(Icons.add),
         ),
       );

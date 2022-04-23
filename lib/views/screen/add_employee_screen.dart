@@ -5,6 +5,7 @@ import 'package:shrms/models/employee.dart';
 import 'package:shrms/views/components/box_button.dart';
 
 class AddEmployee extends StatelessWidget {
+  static const String id = 'AddEmployee';
   const AddEmployee({Key? key}) : super(key: key);
 
   @override
