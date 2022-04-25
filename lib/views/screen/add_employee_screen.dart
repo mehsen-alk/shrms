@@ -27,95 +27,39 @@ class AddEmployee extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Padding(
-                    padding:
-                        EdgeInsets.symmetric(vertical: 5.sp, horizontal: 30.sp),
-                    child: TextFormField(
-                      onChanged: (value) {
-                        name = value;
-                      },
-                      keyboardType: TextInputType.text,
-                      decoration: InputDecoration(
-                        labelText: "Name",
-                        labelStyle: TextStyle(
-                            color: const Color(0XFF329D9C), fontSize: 18.sp),
-                        border: const OutlineInputBorder(
-                          borderSide: BorderSide(
-                            color: Color(0XFF56C596),
-                          ),
-                        ),
-                        prefixIcon: const Icon(
-                          Icons.person,
-                          color: Color(0XFF329D9C),
-                        ),
-                        focusedBorder: const OutlineInputBorder(
-                          borderSide: BorderSide(
-                            color: Color(0XFF56C596),
-                          ),
-                        ),
-                        enabledBorder: const OutlineInputBorder(
-                          borderSide: BorderSide(
-                            color: Color(0XFF56C596),
-                          ),
-                        ),
-                      ),
-                      validator: (String? name) {
-                        if (name == null || name == '' || name.isEmpty) {
-                          return "Can't be empty";
-                        } else {
-                          return null;
-                        }
-                      },
-                    ),
+                  EmployeeFormField(
+                    labelText: 'Name',
+                    icon: Icons.person,
+                    onChange: (value) {
+                      name = value;
+                    },
+                    validator: (String? name) {
+                      if (name == null || name == '' || name.isEmpty) {
+                        return "Can't be empty";
+                      } else {
+                        return null;
+                      }
+                    },
                   ),
-                  Padding(
-                    padding:
-                        EdgeInsets.symmetric(vertical: 5.sp, horizontal: 30.sp),
-                    child: TextFormField(
-                      onChanged: (value) {
-                        salary = int.parse(value);
-                      },
-                      keyboardType: TextInputType.number,
-                      decoration: InputDecoration(
-                        labelText: "Salary",
-                        labelStyle: TextStyle(
-                          color: const Color(0XFF329D9C),
-                          fontSize: 18.sp,
-                        ),
-                        border: const OutlineInputBorder(
-                          borderSide: BorderSide(
-                            color: Color(0XFF56C596),
-                          ),
-                        ),
-                        prefixIcon: const Icon(
-                          Icons.account_balance_wallet_outlined,
-                          color: Color(0XFF329D9C),
-                        ),
-                        focusedBorder: const OutlineInputBorder(
-                          borderSide: BorderSide(
-                            color: Color(0XFF56C596),
-                          ),
-                        ),
-                        enabledBorder: const OutlineInputBorder(
-                          borderSide: BorderSide(
-                            color: Color(0XFF56C596),
-                          ),
-                        ),
-                      ),
-                      validator: (String? salary) {
-                        if (salary == null || salary == '' || salary.isEmpty) {
-                          return "Can't be empty";
-                        } else if (salary.contains('-')) {
-                          return "Salary can't be negative";
-                        } else if (salary.contains("a")) {
-                          return "Salary can not  contain characters";
-                        } else if (salary.startsWith('0')) {
-                          return "Salary can not be 0";
-                        } else {
-                          return null;
-                        }
-                      },
-                    ),
+                  EmployeeFormField(
+                    labelText: 'Salary',
+                    icon: Icons.account_balance_wallet_outlined,
+                    onChange: (value) {
+                      salary = int.parse(value);
+                    },
+                    validator: (String? salary) {
+                      if (salary == null || salary == '' || salary.isEmpty) {
+                        return "Can't be empty";
+                      } else if (salary.contains('-')) {
+                        return "Salary can't be negative";
+                      } else if (salary.contains("a")) {
+                        return "Salary can not  contain characters";
+                      } else if (salary.startsWith('0')) {
+                        return "Salary can not be 0";
+                      } else {
+                        return null;
+                      }
+                    },
                   ),
                   Box(
                       text: "Add",
@@ -135,5 +79,56 @@ class AddEmployee extends StatelessWidget {
         ),
       );
     });
+  }
+}
+
+class EmployeeFormField extends StatelessWidget {
+  const EmployeeFormField(
+      {Key? key,
+      required this.onChange,
+      required this.labelText,
+      required this.icon,
+      required this.validator})
+      : super(key: key);
+
+  final Function(String) onChange;
+  final String labelText;
+  final IconData icon;
+  final String? Function(String?) validator;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.symmetric(vertical: 5.sp, horizontal: 30.sp),
+      child: TextFormField(
+        onChanged: onChange,
+        keyboardType: TextInputType.text,
+        decoration: InputDecoration(
+          labelText: labelText,
+          labelStyle:
+              TextStyle(color: const Color(0XFF329D9C), fontSize: 18.sp),
+          border: const OutlineInputBorder(
+            borderSide: BorderSide(
+              color: Color(0XFF56C596),
+            ),
+          ),
+          prefixIcon: Icon(
+            icon,
+            color: const Color(0XFF329D9C),
+          ),
+          focusedBorder: const OutlineInputBorder(
+            borderSide: BorderSide(
+              color: Color(0XFF56C596),
+            ),
+          ),
+          enabledBorder: const OutlineInputBorder(
+            borderSide: BorderSide(
+              color: Color(0XFF56C596),
+            ),
+          ),
+        ),
+        validator: validator,
+      ),
+    );
   }
 }
