@@ -16,7 +16,7 @@ class EmployeeBubble extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 10.sp, vertical: 5.sp),
       child: GestureDetector(
-        onLongPress: () {
+        onTap: () {
           showModalBottomSheet(
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(10.sp),

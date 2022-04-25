@@ -53,7 +53,8 @@ class _EmployeeScreenState extends State<EmployeeScreen> {
           ],
         ),
         floatingActionButton: FloatingActionButton(
-          onPressed: () => Navigator.pushNamed(context, AddEmployee.id),
+          onPressed: () =>
+              Navigator.pushReplacementNamed(context, AddEmployee.id),
           child: const Icon(Icons.add),
         ),
       );
