@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:shrms/views/components/box_button.dart';
 import 'package:shrms/views/screen/employee_screen.dart';
+import 'package:shrms/views/screen/weeks_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   static const String id = 'HomeScreen';
@@ -21,7 +22,11 @@ class HomeScreen extends StatelessWidget {
                 text: "Employee",
                 onPress: () => Navigator.pushNamed(context, EmployeeScreen.id),
               ),
-              Box(text: "Weeks", onPress: () {}),
+              Box(
+                  text: "Weeks",
+                  onPress: () {
+                    Navigator.pushNamed(context, WeeksScreen.id);
+                  }),
             ],
           ),
         ),
