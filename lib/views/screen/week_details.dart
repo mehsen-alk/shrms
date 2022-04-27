@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shrms/views/screen/add_employee_work_week.dart';
 
 class WeekDetails extends StatefulWidget {
   static const id = 'weekDetailsID';
@@ -18,6 +19,14 @@ class _WeekDetailsState extends State<WeekDetails> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Week ${widget.weekID}'),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.pushNamed(context, AddEmployeeWorkWeek.id,
+              arguments: widget.weekID);
+        },
+        backgroundColor: Colors.teal,
+        child: const Icon(Icons.add),
       ),
       body: SingleChildScrollView(
         child: ExpansionPanelList(

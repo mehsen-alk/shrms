@@ -35,7 +35,11 @@ class WeeksScreen extends StatelessWidget {
           children: weeks,
         ),
         floatingActionButton: FloatingActionButton(
-          onPressed: () {},
+          backgroundColor: Colors.teal,
+          child: const Icon(Icons.add),
+          onPressed: () {
+            // todo: add new week
+          },
         ),
       ),
     );
