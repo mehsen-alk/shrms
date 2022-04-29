@@ -8,7 +8,6 @@ import 'package:shrms/views/screen/home_screen.dart';
 import 'package:shrms/views/screen/week_details.dart';
 import 'package:shrms/views/screen/weeks_screen.dart';
 
-// hi
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
