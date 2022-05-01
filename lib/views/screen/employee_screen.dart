@@ -22,9 +22,15 @@ class _EmployeeScreenState extends State<EmployeeScreen> {
         appBar: AppBar(
           title: const Text("SHRMS"),
         ),
-        body: FutureBuilder<List<Employee>>(
-          future: _helper.employeesList,
-          builder: _futureBuilder,
+        body: RefreshIndicator(
+          onRefresh: () async {
+            await _helper.updateEmployeesList();
+            setState(() {});
+          },
+          child: FutureBuilder<List<Employee>>(
+            future: _helper.employeesList,
+            builder: _futureBuilder,
+          ),
         ),
         floatingActionButton: FloatingActionButton(
           onPressed: () =>
