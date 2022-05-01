@@ -79,7 +79,7 @@ class EmployeeBubble extends StatelessWidget {
                           ElevatedButton(
                             onPressed: () {
                               employeeFirestoreHelper.deleteEmployee(
-                                  id: employee.id);
+                                  employee: employee);
                               Navigator.pop(context);
                             },
                             child: const Icon(Icons.delete),

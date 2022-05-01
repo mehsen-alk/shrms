@@ -2,79 +2,99 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:shrms/models/employee.dart';
 
 class EmployeeFirestoreHelper {
-  static FirebaseFirestore firestore = FirebaseFirestore.instance;
-  final CollectionReference employeesCollection =
+  // data will store here
+  static List<Employee> _employeesList = [];
+
+  // store all paths to avoid hard code and for easy modify
+  static final FirebaseFirestore firestore = FirebaseFirestore.instance;
+  static final CollectionReference employeesCollection =
       firestore.collection('Employees');
-  final nameFieldPath = 'name';
-  final salaryFieldPath = 'salary';
+  static const String idFieldPath = 'id';
+  static const String nameFieldPath = 'name';
+  static const String salaryFieldPath = 'salary';
 
-  /// return a snapshot to use it inside stream builder
-  ///
-  /// StreamBuilder<QuerySnapshot>(
-  ///  stream: EmployeeFirestoreHelper().getEmployees(),
-  ///  builder: (context, snapshot) {
-  ///    List<Text> employees = [];
-  ///    if (snapshot.hasData) {
-  ///      snapshot.data?.docs.forEach((employee) {
-  ///        employees.add(Text(employee[nameFieldPath]));
-  ///      });
-  ///    }
-  ///    return Expanded(
-  ///      child: ListView(
-  ///        children: employees,
-  ///      ),
-  ///    );
-  /// }),
-  ///
-  /// or use it like this:
-  ///
-  /// var f = EmployeeFirestoreHelper().getEmployees();
-  /// f.forEach((querySnapshot) {
-  ///   for (var doc in querySnapshot.docs) {
-  ///     print('name: ${doc[nameFieldPath]}');
-  ///     print('salary: ${doc[salaryFieldPath]}');
-  /// }
-  /// });
-  Stream<QuerySnapshot<Object?>> getEmployees() {
-    return employeesCollection.snapshots();
-  }
-
-  void addEmployee({required Employee employee}) async {
-    // check if the collection employee exist if not create it
-    // because there is no directly way to do that, we check if there is an document
-    // in the collection by check its size
-    if ((await employeesCollection
-            .limit(1)
-            .get()
-            .then((value) => value.size)) ==
-        0) {
-      return await employeesCollection.doc('1').set(
-          {nameFieldPath: employee.name, salaryFieldPath: employee.salary});
+  /// get the existing list or fetch it from cloud if its empty
+  Future<List<Employee>> get employeesList async {
+    if (_employeesList.isEmpty) {
+      await updateEmployeesList();
     }
-    await employeesCollection
-        .doc('${int.parse(await getIDs().then((value) => value.last)) + 1}')
-        .set({nameFieldPath: employee.name, salaryFieldPath: employee.salary});
+    return _employeesList;
   }
 
-  void editEmployee({required String id, required Employee employee}) {
-    employeesCollection
-        .doc(id)
-        .set({nameFieldPath: employee.name, salaryFieldPath: employee.salary});
+  /// fetch all employees in firestore
+  ///
+  /// return a sorted list of employee
+  Future<List<Employee>> updateEmployeesList() async {
+    // clear the existing list for avoiding duplicate data
+    _employeesList = [];
+
+    // fetch data from the cloud and but them in the list
+    await employeesCollection.get().then((QuerySnapshot employees) async {
+      for (var doc in employees.docs) {
+        Employee employee = Employee();
+
+        employee.id = doc[idFieldPath];
+        employee.name = doc[nameFieldPath];
+        employee.salary = doc[salaryFieldPath];
+
+        _employeesList.add(employee);
+      }
+    });
+
+    // sort by id
+    _employeesList.sort((e1, e2) => (e1.id > e2.id) ? 1 : 0);
+
+    return _employeesList;
   }
 
-  void deleteEmployee({required String id}) {
-    employeesCollection.doc(id).delete();
+  /// add employee to Employee firestore collection
+  ///
+  /// and update the existing employee list
+  ///
+  /// id is auto increment
+  ///
+  /// the list will update after this
+  void addEmployee({required Employee employee}) async {
+    // no employees add the first one
+    if ((await employeesList).isEmpty) {
+      employee.id = 1;
+      employeesCollection.doc('1').set({
+        idFieldPath: employee.id,
+        nameFieldPath: employee.name,
+        salaryFieldPath: employee.salary
+      });
+    } else {
+      // set employee id
+      employee.id = _employeesList.last.id + 1;
+
+      await employeesCollection.doc('${employee.id}').set({
+        idFieldPath: employee.id,
+        nameFieldPath: employee.name,
+        salaryFieldPath: employee.salary
+      });
+    }
+    updateEmployeesList();
   }
 
-  /// get list of ids for the existing employees
-  Future<List<String>> getIDs() async {
-    List<String> ids = [];
-    await employeesCollection
-        .get()
-        .then((employees) => employees.docs.forEach((employee) {
-              ids.add(employee.id);
-            }));
-    ids.sort((a, b) => int.parse(a).compareTo(int.parse(b)));
-    return ids;
+  /// edit info for the given employee
+  ///
+  /// the list will update after this
+  void editEmployee({required Employee employee}) async {
+    await employeesCollection.doc('${employee.id}').set({
+      idFieldPath: employee.id,
+      nameFieldPath: employee.name,
+      salaryFieldPath: employee.salary
+    });
+
+    updateEmployeesList();
+  }
+
+  /// delete the given employee
+  ///
+  /// the list will update after this
+  void deleteEmployee({required Employee employee}) {
+    employeesCollection.doc('${employee.id}').delete();
+
+    updateEmployeesList();
   }
 }

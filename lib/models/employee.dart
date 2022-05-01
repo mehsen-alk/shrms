@@ -1,12 +1,12 @@
 class Employee {
   Employee(
-      {this.id = '',
+      {this.id = 0,
       this.name = '',
       this.salary = 0,
       this.hoursNotPaidYet = 0,
       this.financialAccount = 0});
 
-  String id;
+  int id;
   String name;
   int salary;
   int hoursNotPaidYet;

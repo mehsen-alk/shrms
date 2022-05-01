@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:shrms/data/firestore/employees_firestore_helper.dart';
@@ -15,7 +14,7 @@ class EmployeeScreen extends StatefulWidget {
 }
 
 class _EmployeeScreenState extends State<EmployeeScreen> {
-  EmployeeFirestoreHelper employeeFirestoreHelper = EmployeeFirestoreHelper();
+  final EmployeeFirestoreHelper _helper = EmployeeFirestoreHelper();
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(builder: (BuildContext context) {
@@ -23,34 +22,9 @@ class _EmployeeScreenState extends State<EmployeeScreen> {
         appBar: AppBar(
           title: const Text("SHRMS"),
         ),
-        body: Column(
-          children: [
-            StreamBuilder<QuerySnapshot>(
-              stream: employeeFirestoreHelper.getEmployees(),
-              builder: (BuildContext context,
-                  AsyncSnapshot<QuerySnapshot> snapshot) {
-                List<EmployeeBubble> employeeBubbles = [];
-                if (snapshot.hasData) {
-                  final List<QueryDocumentSnapshot<Object?>>? employees =
-                      snapshot.data?.docs;
-                  for (var employee in employees!) {
-                    Employee employee1 = Employee(
-                      id: employee.id,
-                      name: employee['name'],
-                      salary: employee['salary'],
-                    );
-                    final employeeBubble = EmployeeBubble(
-                      employee: employee1,
-                    );
-                    employeeBubbles.add(employeeBubble);
-                  }
-                }
-                return Expanded(
-                  child: ListView(children: employeeBubbles),
-                );
-              },
-            ),
-          ],
+        body: FutureBuilder<List<Employee>>(
+          future: _helper.employeesList,
+          builder: _futureBuilder,
         ),
         floatingActionButton: FloatingActionButton(
           onPressed: () =>
@@ -59,5 +33,29 @@ class _EmployeeScreenState extends State<EmployeeScreen> {
         ),
       );
     });
+  }
+
+  Widget _futureBuilder(
+      BuildContext context, AsyncSnapshot<List<Employee>> employees) {
+    List<EmployeeBubble> employeesBubble = [];
+
+    if (employees.connectionState == ConnectionState.waiting) {
+      return const Center(child: CircularProgressIndicator());
+    } else if (employees.connectionState == ConnectionState.done) {
+      if (employees.hasData) {
+        employees.data?.forEach((employee) {
+          employeesBubble.add(EmployeeBubble(employee: employee));
+        });
+        if (employeesBubble.isNotEmpty) {
+          return ListView(
+            shrinkWrap: true,
+            children: employeesBubble,
+          );
+        } else {
+          return const Center(child: Text('no data'));
+        }
+      }
+    }
+    return const Text('error');
   }
 }
