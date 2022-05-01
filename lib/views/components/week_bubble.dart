@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:shrms/views/screen/week_details.dart';
+import 'package:shrms/views/screen/weeks_screen/week_details.dart';
 
 class WeekBubble extends StatelessWidget {
   const WeekBubble({required this.weekID, required this.date, Key? key})

@@ -3,7 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:shrms/data/firestore/employees_firestore_helper.dart';
 import 'package:shrms/models/employee.dart';
 import 'package:shrms/views/components/employee_bubble.dart';
-import 'package:shrms/views/screen/add_employee_screen.dart';
+import 'package:shrms/views/screen/employees_screens/add_employee_screen.dart';
 
 class EmployeeScreen extends StatefulWidget {
   static const String id = 'EmployeeScreen';

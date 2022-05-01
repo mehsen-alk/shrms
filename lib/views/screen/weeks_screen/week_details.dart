@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:shrms/views/screen/add_employee_work_week.dart';
+import 'package:shrms/views/screen/weeks_screen/add_employee_work_week.dart';
 
 class WeekDetails extends StatefulWidget {
   static const id = 'weekDetailsID';

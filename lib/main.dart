@@ -1,12 +1,12 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:shrms/views/screen/add_employee_screen.dart';
-import 'package:shrms/views/screen/add_employee_work_week.dart';
-import 'package:shrms/views/screen/employee_screen.dart';
+import 'package:shrms/views/screen/employees_screens/add_employee_screen.dart';
+import 'package:shrms/views/screen/weeks_screen/add_employee_work_week.dart';
+import 'package:shrms/views/screen/employees_screens/employee_screen.dart';
 import 'package:shrms/views/screen/home_screen.dart';
-import 'package:shrms/views/screen/week_details.dart';
-import 'package:shrms/views/screen/weeks_screen.dart';
+import 'package:shrms/views/screen/weeks_screen/week_details.dart';
+import 'package:shrms/views/screen/weeks_screen/weeks_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

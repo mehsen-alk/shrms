@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:shrms/views/components/box_button.dart';
-import 'package:shrms/views/screen/employee_screen.dart';
-import 'package:shrms/views/screen/weeks_screen.dart';
+import 'package:shrms/views/screen/employees_screens/employee_screen.dart';
+import 'package:shrms/views/screen/weeks_screen/weeks_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   static const String id = 'HomeScreen';
