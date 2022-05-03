@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:shrms/models/week.dart';
 import 'package:shrms/views/components/day_card.dart';
 
 class AddEmployeeWorkWeek extends StatefulWidget {
-  const AddEmployeeWorkWeek(this.weekID, {Key? key}) : super(key: key);
+  const AddEmployeeWorkWeek(this.week, {Key? key}) : super(key: key);
   static const id = 'AddEmployeeWorkWeek';
 
-  final String weekID;
+  final Week week;
 
   @override
   State<AddEmployeeWorkWeek> createState() => _AddEmployeeWorkWeekState();

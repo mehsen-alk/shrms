@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:shrms/models/week.dart';
 import 'package:shrms/views/screen/employees_screens/add_employee_screen.dart';
 import 'package:shrms/views/screen/weeks_screen/add_employee_work_week.dart';
 import 'package:shrms/views/screen/employees_screens/employee_screen.dart';
@@ -35,10 +36,10 @@ class SHRMS extends StatelessWidget {
             AddEmployee.id: (context) => const AddEmployee(),
             WeeksScreen.id: (context) => WeeksScreen(),
             WeekDetails.id: (context) => WeekDetails(
-                  ModalRoute.of(context)?.settings.arguments as String,
+                  ModalRoute.of(context)?.settings.arguments as Week,
                 ),
             AddEmployeeWorkWeek.id: (context) => AddEmployeeWorkWeek(
-                ModalRoute.of(context)?.settings.arguments as String),
+                ModalRoute.of(context)?.settings.arguments as Week),
           },
         );
       },

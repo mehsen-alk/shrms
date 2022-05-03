@@ -1,41 +1,107 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:shrms/models/weekly_work.dart';
+import '../../models/week.dart';
 
 class WeeksFirestoreHelper {
   static FirebaseFirestore firestore = FirebaseFirestore.instance;
-  final CollectionReference weeksCollection = firestore.collection('Weeks');
+  static final CollectionReference weeksCollection =
+      firestore.collection('Weeks');
+  static const String idFieldPath = 'id';
+  static const String startingDateFiledPath = 'starting date';
+  static const String dayMapField = 'day';
+  static const String monthMapField = 'month';
+  static const String yearMapField = 'year';
 
-  Stream<QuerySnapshot<Object?>> getWeeks() {
-    return weeksCollection.snapshots();
-  }
+  static List<Week> _weeksList = [];
 
-  /// add an empty work-week
-  void addWeek() async {
-    // check if the collection weeks exist if not create it
-    // because there is no directly way to do that, we check if there is an document
-    // in the collection by check its size
-    if ((await weeksCollection.limit(1).get().then((value) => value.size)) ==
-        0) {
-      return weeksCollection.doc('1').set({'none': null});
+  /// get the existing list or fetch it from cloud if its empty
+  Future<List<Week>> get weeksList async {
+    if (_weeksList.isEmpty) {
+      _weeksList = await updateWeeksList();
     }
-    await weeksCollection
-        .doc('${int.parse(await getIDs().then((value) => value.last)) + 1}')
-        .set({'none': null});
+
+    return _weeksList;
   }
 
-  /// get list of weeks id
-  Future<List<String>> getIDs() async {
-    List<String> ids = [];
-    await weeksCollection.get().then((weeks) => weeks.docs.forEach((week) {
-          ids.add(week.id);
-        }));
-    ids.sort((a, b) => int.parse(a).compareTo(int.parse(b)));
-    return ids;
-  }
-
-  /// add a work-week details for an employee
+  /// fetch all weeks in firestore
   ///
-  /// the [payed] property is for determine if the employee got his receivables for this week or not
+  /// return a sorted list of weeks
+  Future<List<Week>> updateWeeksList() async {
+    // clear the existing list for avoiding duplicate data
+    _weeksList = [];
+
+    // fetch data from the cloud and but them in the list
+    await weeksCollection.get().then((QuerySnapshot weeks) async {
+      for (var doc in weeks.docs) {
+        Week week = Week();
+
+        week.id = doc[idFieldPath];
+
+        week.startingDate = DateTime(
+            doc[startingDateFiledPath][yearMapField],
+            doc[startingDateFiledPath][monthMapField],
+            doc[startingDateFiledPath][dayMapField]);
+
+        _weeksList.add(week);
+      }
+    });
+
+    // sort by id
+    _weeksList.sort((e1, e2) => (e1.id > e2.id) ? 1 : 0);
+
+    return _weeksList;
+  }
+
+  /// add week to Week firestore collection
+  ///
+  /// and update the existing week list
+  ///
+  /// id is auto increment
+  ///
+  /// the list will update after this
+  void addWeek() async {
+    Week week = Week(startingDate: DateTime.now());
+
+    // no weeks, add the first one
+    if ((await weeksList).isEmpty) {
+      week.id = 1;
+
+      // to set the beginning of the week
+      List<int> eruDayWeek = [6, 7, 1, 2, 3, 4, 5];
+      int daysFromFirstDayInWeek =
+          -eruDayWeek.indexOf(week.startingDate!.weekday);
+
+      week.startingDate =
+          DateTime.now().add(Duration(days: daysFromFirstDayInWeek));
+
+      weeksCollection.doc('1').set({
+        idFieldPath: week.id,
+        startingDateFiledPath: {
+          yearMapField: week.startingDate?.year,
+          monthMapField: week.startingDate?.month,
+          dayMapField: week.startingDate?.day
+        }
+      });
+    } else {
+      // set week id
+      week.id = _weeksList.last.id + 1;
+
+      // set the beginning of the week
+      week.startingDate =
+          (await weeksList).last.startingDate?.add(const Duration(days: 7));
+
+      await weeksCollection.doc('${week.id}').set({
+        idFieldPath: week.id,
+        startingDateFiledPath: {
+          yearMapField: week.startingDate?.year,
+          monthMapField: week.startingDate?.month,
+          dayMapField: week.startingDate?.day
+        }
+      });
+    }
+    updateWeeksList();
+  }
+
   void addEmployeeWorkWeekDetails(
       {required String weekID,
       required String employeeID,

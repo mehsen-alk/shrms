@@ -5,6 +5,7 @@ import 'package:shrms/models/employee.dart';
 
 class EmployeeBubble extends StatelessWidget {
   final Employee employee;
+
   const EmployeeBubble({
     Key? key,
     required this.employee,

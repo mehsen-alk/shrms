@@ -55,7 +55,7 @@ class EmployeeFirestoreHelper {
   ///
   /// the list will update after this
   void addEmployee({required Employee employee}) async {
-    // no employees add the first one
+    // no employees, add the first one
     if ((await employeesList).isEmpty) {
       employee.id = 1;
       employeesCollection.doc('1').set({

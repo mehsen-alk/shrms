@@ -1,21 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:shrms/models/week.dart';
 import 'package:shrms/views/screen/weeks_screen/week_details.dart';
 
 class WeekBubble extends StatelessWidget {
-  const WeekBubble({required this.weekID, required this.date, Key? key})
-      : super(key: key);
+  const WeekBubble({required this.week, Key? key}) : super(key: key);
 
-  final String weekID;
-  final String date;
+  final Week week;
 
   @override
   Widget build(BuildContext context) {
+    String firstDay =
+        '${week.startingDate!.year}-${week.startingDate!.month}-${week.startingDate!.day}';
+    var lastWeek = week.startingDate!.add(const Duration(days: 7));
+    String lastDay = '${lastWeek.year}-${lastWeek.month}-${lastWeek.day}';
     return Padding(
       padding: EdgeInsets.all(8.sp),
       child: GestureDetector(
         onTap: () {
-          Navigator.pushNamed(context, WeekDetails.id, arguments: weekID);
+          Navigator.pushNamed(context, WeekDetails.id, arguments: week);
         },
         child: Container(
           padding: EdgeInsets.all(20.sp),
@@ -25,7 +28,10 @@ class WeekBubble extends StatelessWidget {
           ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [Text(weekID), Text(date)],
+            children: [
+              Text(week.id.toString()),
+              Text('$firstDay -> $lastDay'),
+            ],
           ),
         ),
       ),

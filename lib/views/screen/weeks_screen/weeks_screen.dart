@@ -1,28 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:shrms/data/firestore/weeks_firestore_helper.dart';
 import 'package:shrms/views/components/week_bubble.dart';
 
-class WeeksScreen extends StatelessWidget {
+import '../../../models/week.dart';
+
+class WeeksScreen extends StatefulWidget {
   WeeksScreen({Key? key}) : super(key: key);
   static const id = 'weeksScreen';
 
-  static List<WeekBubble> addFakeWeeks() {
-    List<WeekBubble> fakeWeeks = [];
-    DateTime dateTimeNow = DateTime.now();
-    DateTime dateTimeAfterWeek = dateTimeNow.add(const Duration(days: 7));
-    for (int i = 1; i < 6; i++) {
-      fakeWeeks.add(WeekBubble(
-        weekID: '$i',
-        date: '${dateTimeNow.year}/${dateTimeNow.month}/${dateTimeNow.day}'
-            '-> ${dateTimeAfterWeek.year}/${dateTimeAfterWeek.month}/${dateTimeAfterWeek.day}',
-      ));
-      dateTimeNow = dateTimeNow.add(const Duration(days: 8));
-      dateTimeAfterWeek = dateTimeNow.add(const Duration(days: 7));
-    }
-    return fakeWeeks;
-  }
+  @override
+  State<WeeksScreen> createState() => _WeeksScreenState();
+}
 
-  final List<WeekBubble> weeks = addFakeWeeks();
+class _WeeksScreenState extends State<WeeksScreen> {
+  final WeeksFirestoreHelper _helper = WeeksFirestoreHelper();
 
   @override
   Widget build(BuildContext context) {
@@ -31,17 +23,45 @@ class WeeksScreen extends StatelessWidget {
         appBar: AppBar(
           title: const Text('SHRMS'),
         ),
-        body: ListView(
-          children: weeks,
+        body: RefreshIndicator(
+          onRefresh: () async {
+            await _helper.updateWeeksList();
+            setState(() {});
+          },
+          child: FutureBuilder<List<Week>>(
+              future: _helper.weeksList, builder: _futureBuilder),
         ),
         floatingActionButton: FloatingActionButton(
           backgroundColor: Colors.teal,
           child: const Icon(Icons.add),
           onPressed: () {
-            // todo: add new week
+            _helper.addWeek();
           },
         ),
       ),
     );
+  }
+
+  Widget _futureBuilder(BuildContext context, AsyncSnapshot<List<Week>> weeks) {
+    List<WeekBubble> weeksBubble = [];
+
+    if (weeks.connectionState == ConnectionState.waiting) {
+      return const Center(child: CircularProgressIndicator());
+    } else if (weeks.connectionState == ConnectionState.done) {
+      if (weeks.hasData) {
+        weeks.data?.forEach((week) {
+          weeksBubble.add(WeekBubble(week: week));
+        });
+        if (weeksBubble.isNotEmpty) {
+          return ListView(
+            shrinkWrap: true,
+            children: weeksBubble,
+          );
+        } else {
+          return const Center(child: Text('no data'));
+        }
+      }
+    }
+    return const Text('error');
   }
 }
