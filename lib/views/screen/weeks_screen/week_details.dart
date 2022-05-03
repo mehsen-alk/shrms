@@ -4,7 +4,7 @@ import '../../../models/week.dart';
 
 class WeekDetails extends StatefulWidget {
   static const id = 'weekDetailsID';
-  WeekDetails(this.week);
+  const WeekDetails(this.week, {Key? key}) : super(key: key);
 
   final Week week;
   @override

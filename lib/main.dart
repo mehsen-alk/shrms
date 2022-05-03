@@ -34,7 +34,7 @@ class SHRMS extends StatelessWidget {
             HomeScreen.id: (context) => const HomeScreen(),
             EmployeeScreen.id: (context) => const EmployeeScreen(),
             AddEmployee.id: (context) => const AddEmployee(),
-            WeeksScreen.id: (context) => WeeksScreen(),
+            WeeksScreen.id: (context) => const WeeksScreen(),
             WeekDetails.id: (context) => WeekDetails(
                   ModalRoute.of(context)?.settings.arguments as Week,
                 ),

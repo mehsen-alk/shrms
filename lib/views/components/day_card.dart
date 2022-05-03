@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class DayCard extends StatelessWidget {
+class DayCard extends StatefulWidget {
   DayCard(
       {Key? key,
       required this.dayName,
@@ -14,28 +14,33 @@ class DayCard extends StatelessWidget {
   final Function(int) onChange;
 
   @override
+  State<DayCard> createState() => _DayCardState();
+}
+
+class _DayCardState extends State<DayCard> {
+  @override
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.all(10.sp),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(dayName),
+          Text(widget.dayName),
           Row(
             children: [
               IconButton(
                 icon: const Icon(Icons.remove),
                 onPressed: () {
-                  counter--;
-                  onChange(counter);
+                  widget.counter--;
+                  widget.onChange(widget.counter);
                 },
               ),
-              Text(counter.toString()),
+              Text(widget.counter.toString()),
               IconButton(
                 icon: const Icon(Icons.add),
                 onPressed: () {
-                  counter++;
-                  onChange(counter);
+                  widget.counter++;
+                  widget.onChange(widget.counter);
                 },
               ),
             ],
