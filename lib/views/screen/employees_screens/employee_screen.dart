@@ -36,6 +36,7 @@ class _EmployeeScreenState extends State<EmployeeScreen> {
           onPressed: () =>
               Navigator.pushReplacementNamed(context, AddEmployee.id),
           child: const Icon(Icons.add),
+          backgroundColor: Colors.teal,
         ),
       );
     });

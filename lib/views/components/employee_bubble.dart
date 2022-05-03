@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:shrms/data/firestore/employees_firestore_helper.dart';
 import 'package:shrms/models/employee.dart';
+import 'package:shrms/views/components/employee_info.dart';
 
 class EmployeeBubble extends StatelessWidget {
   final Employee employee;
@@ -44,30 +45,10 @@ class EmployeeBubble extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.baseline,
                           textBaseline: TextBaseline.alphabetic,
                           children: [
-                            Text(
-                              "ID: ${employee.id}",
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 18.sp,
-                              ),
-                            ),
-                            Text(
-                              "Name: ${employee.name}",
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 18.sp,
-                              ),
-                            ),
-                            Text(
-                              "Salary: ${employee.salary}",
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 18.sp,
-                              ),
-                            ),
+                            EmployeeInfo(employee: employee.id, text: 'ID'),
+                            EmployeeInfo(employee: employee.name, text: 'Name'),
+                            EmployeeInfo(
+                                employee: employee.salary, text: 'Salary'),
                           ],
                         ),
                       ],
@@ -132,21 +113,13 @@ class EmployeeBubble extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.baseline,
                 textBaseline: TextBaseline.alphabetic,
                 children: [
-                  Text(
-                    "ID: ${employee.id}",
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 18.sp,
-                    ),
+                  EmployeeInfo(
+                    employee: employee.id,
+                    text: 'ID',
                   ),
-                  Text(
-                    "Name: ${employee.name}",
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 18.sp,
-                    ),
+                  EmployeeInfo(
+                    employee: employee.name,
+                    text: 'Name',
                   ),
                 ],
               ),

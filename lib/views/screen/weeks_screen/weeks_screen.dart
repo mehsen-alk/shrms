@@ -6,7 +6,7 @@ import 'package:shrms/views/components/week_bubble.dart';
 import '../../../models/week.dart';
 
 class WeeksScreen extends StatefulWidget {
-  WeeksScreen({Key? key}) : super(key: key);
+  const WeeksScreen({Key? key}) : super(key: key);
   static const id = 'weeksScreen';
 
   @override
@@ -29,7 +29,9 @@ class _WeeksScreenState extends State<WeeksScreen> {
             setState(() {});
           },
           child: FutureBuilder<List<Week>>(
-              future: _helper.weeksList, builder: _futureBuilder),
+            future: _helper.weeksList,
+            builder: _futureBuilder,
+          ),
         ),
         floatingActionButton: FloatingActionButton(
           backgroundColor: Colors.teal,
