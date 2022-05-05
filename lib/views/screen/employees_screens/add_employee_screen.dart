@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:shrms/data/firestore/employees_firestore_helper.dart';
 import 'package:shrms/models/employee.dart';
@@ -21,7 +22,6 @@ class AddEmployee extends StatelessWidget {
           title: const Text("SHRMS"),
         ),
         body: Form(
-          autovalidateMode: AutovalidateMode.onUserInteraction,
           key: _formKey,
           child: Center(
             child: SingleChildScrollView(
@@ -41,6 +41,10 @@ class AddEmployee extends StatelessWidget {
                         return null;
                       }
                     },
+                    keyboardType: TextInputType.text,
+                    inputFormatters: <TextInputFormatter>[
+                      FilteringTextInputFormatter.singleLineFormatter
+                    ],
                   ),
                   EmployeeFormField(
                     labelText: 'Salary',
@@ -51,16 +55,16 @@ class AddEmployee extends StatelessWidget {
                     validator: (String? salary) {
                       if (salary == null || salary == '' || salary.isEmpty) {
                         return "Can't be empty";
-                      } else if (salary.contains('-')) {
-                        return "Salary can't be negative";
-                      } else if (salary.contains("a")) {
-                        return "Salary can not  contain characters";
                       } else if (salary.startsWith('0')) {
                         return "Salary can not be 0";
                       } else {
                         return null;
                       }
                     },
+                    keyboardType: TextInputType.number,
+                    inputFormatters: <TextInputFormatter>[
+                      FilteringTextInputFormatter.digitsOnly
+                    ],
                   ),
                   Box(
                       text: "Add",

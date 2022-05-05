@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:shrms/data/firestore/employees_firestore_helper.dart';
 import 'package:shrms/models/employee.dart';
 import 'package:shrms/views/components/employee_info.dart';
+import 'package:shrms/views/screen/employees_screens/edit_employee_screen.dart';
 
 class EmployeeBubble extends StatelessWidget {
   final Employee employee;
@@ -45,16 +46,15 @@ class EmployeeBubble extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.baseline,
                           textBaseline: TextBaseline.alphabetic,
                           children: [
-                            EmployeeInfo(employee: employee.id, text: 'ID'),
-                            EmployeeInfo(employee: employee.name, text: 'Name'),
-                            EmployeeInfo(
-                                employee: employee.salary, text: 'Salary'),
+                            EmployeeInfo(text: 'ID: ${employee.id}'),
+                            EmployeeInfo(text: 'Name: ${employee.name}'),
+                            EmployeeInfo(text: 'Salary: ${employee.salary}'),
                           ],
                         ),
                       ],
                     ),
                     Padding(
-                      padding: EdgeInsets.symmetric(vertical: 20.sp),
+                      padding: EdgeInsets.symmetric(vertical: 10.sp),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
@@ -64,7 +64,10 @@ class EmployeeBubble extends StatelessWidget {
                                   employee: employee);
                               Navigator.pop(context);
                             },
-                            child: const Icon(Icons.delete),
+                            child: Icon(
+                              Icons.delete,
+                              size: 28.sp,
+                            ),
                             style: ButtonStyle(
                               backgroundColor:
                                   MaterialStateProperty.all<Color>(Colors.red),
@@ -73,9 +76,16 @@ class EmployeeBubble extends StatelessWidget {
                               ),
                             ),
                           ),
+                          SizedBox(width: 5.sp),
                           ElevatedButton(
-                            onPressed: () => {},
-                            child: const Icon(Icons.edit),
+                            onPressed: () {
+                              Navigator.pushNamed(context, EditEmployee.id,
+                                  arguments: employee);
+                            },
+                            child: Icon(
+                              Icons.edit,
+                              size: 28.sp,
+                            ),
                             style: ButtonStyle(
                               fixedSize: MaterialStateProperty.all(
                                 Size(150.w, 25.w),
@@ -113,14 +123,8 @@ class EmployeeBubble extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.baseline,
                 textBaseline: TextBaseline.alphabetic,
                 children: [
-                  EmployeeInfo(
-                    employee: employee.id,
-                    text: 'ID',
-                  ),
-                  EmployeeInfo(
-                    employee: employee.name,
-                    text: 'Name',
-                  ),
+                  EmployeeInfo(text: 'ID: ${employee.id}'),
+                  EmployeeInfo(text: 'Name: ${employee.name}'),
                 ],
               ),
             ],
