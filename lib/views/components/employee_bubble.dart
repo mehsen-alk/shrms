@@ -21,9 +21,6 @@ class EmployeeBubble extends StatelessWidget {
       child: GestureDetector(
         onTap: () {
           showModalBottomSheet(
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(10.sp),
-            ),
             backgroundColor: const Color(0XFF205072),
             context: context,
             builder: (context) {
