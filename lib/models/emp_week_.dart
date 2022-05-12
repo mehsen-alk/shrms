@@ -1,6 +1,8 @@
-class WeeklyWork {
-  WeeklyWork(
-      {this.sat = 0,
+class EmpWeek {
+  EmpWeek(
+      {this.empID = 0,
+      this.weekID = 0,
+      this.sat = 0,
       this.sun = 0,
       this.mon = 0,
       this.tue = 0,
@@ -8,6 +10,8 @@ class WeeklyWork {
       this.the = 0,
       this.fri = 0});
 
+  int empID;
+  int weekID;
   int sat;
   int sun;
   int mon;

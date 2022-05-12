@@ -1,17 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:shrms/models/weekly_work.dart';
+import 'package:shrms/data/firestore/paths.dart';
 import '../../models/week.dart';
 
 class WeeksFirestoreHelper {
-  static FirebaseFirestore firestore = FirebaseFirestore.instance;
-  static final CollectionReference weeksCollection =
-      firestore.collection('Weeks');
-  static const String idFieldPath = 'id';
-  static const String startingDateFiledPath = 'starting date';
-  static const String dayMapField = 'day';
-  static const String monthMapField = 'month';
-  static const String yearMapField = 'year';
-
   static List<Week> _weeksList = [];
 
   /// get the existing list or fetch it from cloud if its empty
@@ -31,16 +22,16 @@ class WeeksFirestoreHelper {
     _weeksList = [];
 
     // fetch data from the cloud and but them in the list
-    await weeksCollection.get().then((QuerySnapshot weeks) async {
+    await WeekPaths.weeksCollection.get().then((QuerySnapshot weeks) async {
       for (var doc in weeks.docs) {
         Week week = Week();
 
-        week.id = doc[idFieldPath];
+        week.id = doc[WeekPaths.idFieldPath];
 
         week.startingDate = DateTime(
-            doc[startingDateFiledPath][yearMapField],
-            doc[startingDateFiledPath][monthMapField],
-            doc[startingDateFiledPath][dayMapField]);
+            doc[WeekPaths.startingDateFiledPath][WeekPaths.yearMapField],
+            doc[WeekPaths.startingDateFiledPath][WeekPaths.monthMapField],
+            doc[WeekPaths.startingDateFiledPath][WeekPaths.dayMapField]);
 
         _weeksList.add(week);
       }
@@ -74,12 +65,12 @@ class WeeksFirestoreHelper {
       week.startingDate =
           DateTime.now().add(Duration(days: daysFromFirstDayInWeek));
 
-      weeksCollection.doc('1').set({
-        idFieldPath: week.id,
-        startingDateFiledPath: {
-          yearMapField: week.startingDate?.year,
-          monthMapField: week.startingDate?.month,
-          dayMapField: week.startingDate?.day
+      WeekPaths.weeksCollection.doc('1').set({
+        WeekPaths.idFieldPath: week.id,
+        WeekPaths.startingDateFiledPath: {
+          WeekPaths.yearMapField: week.startingDate?.year,
+          WeekPaths.monthMapField: week.startingDate?.month,
+          WeekPaths.dayMapField: week.startingDate?.day
         }
       });
     } else {
@@ -90,41 +81,15 @@ class WeeksFirestoreHelper {
       week.startingDate =
           (await weeksList).last.startingDate?.add(const Duration(days: 7));
 
-      await weeksCollection.doc('${week.id}').set({
-        idFieldPath: week.id,
-        startingDateFiledPath: {
-          yearMapField: week.startingDate?.year,
-          monthMapField: week.startingDate?.month,
-          dayMapField: week.startingDate?.day
+      await WeekPaths.weeksCollection.doc('${week.id}').set({
+        WeekPaths.idFieldPath: week.id,
+        WeekPaths.startingDateFiledPath: {
+          WeekPaths.yearMapField: week.startingDate?.year,
+          WeekPaths.monthMapField: week.startingDate?.month,
+          WeekPaths.dayMapField: week.startingDate?.day
         }
       });
     }
     updateWeeksList();
-  }
-
-  void addEmployeeWorkWeekDetails(
-      {required String weekID,
-      required String employeeID,
-      required WeeklyWork weeklyWork,
-      bool payed = false}) {
-    weeksCollection.doc(weekID).collection('Employees').doc(employeeID).set({
-      'sat': weeklyWork.sat,
-      'sun': weeklyWork.sun,
-      'mon': weeklyWork.mon,
-      'tue': weeklyWork.the,
-      'wed': weeklyWork.wed,
-      'the': weeklyWork.the,
-      'fri': weeklyWork.fri,
-      'payed': payed
-    });
-  }
-
-  /// delete all employees work-week details for the given week
-  void clearWeek({required String weekID}) {
-    weeksCollection.doc(weekID).collection('Employees').get().then((employees) {
-      employees.docs.forEach((element) {
-        element.reference.delete();
-      });
-    });
   }
 }

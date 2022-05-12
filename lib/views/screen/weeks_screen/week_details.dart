@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:shrms/data/firestore/emp_week_firestore_helper.dart';
+import 'package:shrms/models/emp_week_.dart';
+import 'package:shrms/models/week.dart';
 import 'package:shrms/views/screen/weeks_screen/add_employee_work_week.dart';
-import '../../../models/week.dart';
 
 class WeekDetails extends StatefulWidget {
   static const id = 'weekDetailsID';
@@ -12,8 +14,17 @@ class WeekDetails extends StatefulWidget {
 }
 
 class _WeekDetailsState extends State<WeekDetails> {
+  EmpWeekFirestoreHelper helper = EmpWeekFirestoreHelper();
+
   List<bool> isExpanded = [true, false, false, false, false, false, false];
   List<String> days = ['sat', 'sun', 'mon', 'tue', 'wed', 'the', 'fri'];
+  late List<EmpWeek> empWeek;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -65,12 +76,7 @@ class _WeekDetailsState extends State<WeekDetails> {
         body: Align(
           alignment: Alignment.bottomLeft,
           child: Column(
-            children: const [
-              Text('1. Mehsen     3'),
-              Text('2. assaf      5'),
-              Text('3. mohamed    9'),
-              Text('4. ali        4'),
-            ],
+            children: const [Text('data')],
           ),
         ),
         isExpanded: isExpanded[i],

@@ -15,7 +15,6 @@ class WeeksScreen extends StatefulWidget {
 
 class _WeeksScreenState extends State<WeeksScreen> {
   final WeeksFirestoreHelper _helper = WeeksFirestoreHelper();
-
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
