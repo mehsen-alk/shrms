@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class EmployeePaths {
   static FirebaseFirestore firestore = FirebaseFirestore.instance;
@@ -33,4 +34,11 @@ class EmpWeekPaths {
   static const String wed = 'wed';
   static const String the = 'the';
   static const String fri = 'fri';
+}
+
+class AdminPaths {
+  static FirebaseAuth firebaseAuth = FirebaseAuth.instance;
+  static FirebaseFirestore firestore = FirebaseFirestore.instance;
+  static final CollectionReference adminCollection =
+      firestore.collection('Admin');
 }
