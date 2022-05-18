@@ -39,24 +39,31 @@ class _WeekDetailsState extends State<WeekDetails> {
         backgroundColor: Colors.teal,
         child: const Icon(Icons.add),
       ),
-      body: SingleChildScrollView(
-        child: FutureBuilder<List<ExpansionPanel>>(
-          future: children(widget.week),
-          builder: (BuildContext context,
-              AsyncSnapshot<List<ExpansionPanel>> snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return const CircularProgressIndicator();
-            } else {
-              return ExpansionPanelList(
-                children: snapshot.data!,
-                expansionCallback: (index, value) {
-                  setState(() {
-                    isExpanded[index] = !isExpanded[index];
-                  });
-                },
-              );
-            }
-          },
+      body: RefreshIndicator(
+        onRefresh: () async {
+          await EmpWeekFirestoreHelper().updateEmployeesList();
+          setState(() {});
+        },
+        child: SingleChildScrollView(
+          physics: const AlwaysScrollableScrollPhysics(),
+          child: FutureBuilder<List<ExpansionPanel>>(
+            future: children(widget.week),
+            builder: (BuildContext context,
+                AsyncSnapshot<List<ExpansionPanel>> snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return const CircularProgressIndicator();
+              } else {
+                return ExpansionPanelList(
+                  children: snapshot.data!,
+                  expansionCallback: (index, value) {
+                    setState(() {
+                      isExpanded[index] = !isExpanded[index];
+                    });
+                  },
+                );
+              }
+            },
+          ),
         ),
       ),
     );
