@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class EmployeeFormField extends StatelessWidget {
@@ -19,7 +20,7 @@ class EmployeeFormField extends StatelessWidget {
   final Function(String) onChange;
   final String labelText;
   final IconData prefixIcon;
-  final IconData? suffixIcon;
+  final Widget? suffixIcon;
   final String? Function(String?) validator;
   final TextInputType keyboardType;
   final List<TextInputFormatter> inputFormatters;
@@ -50,10 +51,7 @@ class EmployeeFormField extends StatelessWidget {
             prefixIcon,
             color: const Color(0XFF329D9C),
           ),
-          suffixIcon: IconButton(
-            icon: Icon(suffixIcon, color: const Color(0XFF329D9C)),
-            onPressed: () {},
-          ),
+          suffixIcon: suffixIcon,
           focusedBorder: const OutlineInputBorder(
             borderSide: BorderSide(
               color: Color(0XFF56C596),

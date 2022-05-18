@@ -4,7 +4,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:shrms/data/firestore/paths.dart';
 import 'package:shrms/models/employee.dart';
 import 'package:shrms/models/week.dart';
-import 'package:shrms/views/screen/admin_screen.dart';
+import 'package:shrms/views/screen/admin_screens/admin_page.dart';
+import 'package:shrms/views/screen/admin_screens/admin_screen.dart';
 import 'package:shrms/views/screen/employees_screens/add_employee_screen.dart';
 import 'package:shrms/views/screen/employees_screens/edit_employee_screen.dart';
 import 'package:shrms/views/screen/weeks_screen/add_employee_work_week.dart';
@@ -28,7 +29,7 @@ class SHRMS extends StatelessWidget {
       builder: (BuildContext context) {
         return MaterialApp(
           initialRoute: AdminPaths.firebaseAuth.currentUser?.email == null
-              ? AdminScreen.id
+              ? AdminPage.id
               : HomeScreen.id,
           theme: ThemeData(
             primaryColor: const Color(0XFF329D9C),
@@ -38,7 +39,7 @@ class SHRMS extends StatelessWidget {
           ),
           routes: {
             HomeScreen.id: (context) => const HomeScreen(),
-            AdminScreen.id: (context) => const AdminScreen(),
+            AdminPage.id: (context) => const AdminPage(),
             EmployeeScreen.id: (context) => const EmployeeScreen(),
             AddEmployee.id: (context) => const AddEmployee(),
             WeeksScreen.id: (context) => const WeeksScreen(),

@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:shrms/data/firestore/paths.dart';
 import 'package:shrms/views/components/box_button.dart';
-import 'package:shrms/views/screen/admin_screen.dart';
+import 'package:shrms/views/screen/admin_screens/admin_page.dart';
+import 'package:shrms/views/screen/admin_screens/admin_screen.dart';
 import 'package:shrms/views/screen/employees_screens/employee_screen.dart';
 import 'package:shrms/views/screen/weeks_screen/weeks_screen.dart';
 
@@ -20,7 +21,7 @@ class HomeScreen extends StatelessWidget {
             IconButton(
                 onPressed: () async {
                   await AdminPaths.firebaseAuth.signOut();
-                  Navigator.pushNamed(context, AdminScreen.id);
+                  Navigator.pushNamed(context, AdminPage.id);
                 },
                 icon: const Icon(Icons.logout))
           ],

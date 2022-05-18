@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:shrms/bloc/password_bloc.dart';
+import 'package:shrms/bloc/password_bloc.dart';
 import 'package:shrms/data/firestore/admin_firestore_helper.dart';
 import 'package:shrms/models/admin.dart';
 import 'package:shrms/views/components/box_button.dart';
@@ -9,6 +12,7 @@ import 'package:shrms/views/screen/home_screen.dart';
 
 class AdminScreen extends StatelessWidget {
   static const String id = 'AdminScreen';
+
   const AdminScreen({Key? key}) : super(key: key);
 
   @override
@@ -16,7 +20,6 @@ class AdminScreen extends StatelessWidget {
     final _formKey = GlobalKey<FormState>();
     Admin admin = Admin(password: '', email: '');
     AdminFirestoreHelper _helper = AdminFirestoreHelper();
-    bool obscureText = true;
     return ScreenUtilInit(builder: (BuildContext context) {
       return Scaffold(
         appBar: AppBar(
@@ -43,20 +46,33 @@ class AdminScreen extends StatelessWidget {
                       FilteringTextInputFormatter.singleLineFormatter
                     ],
                   ),
-                  EmployeeFormField(
-                    obscureText: obscureText,
-                    labelText: 'Password',
-                    prefixIcon: Icons.lock,
-                    suffixIcon:
-                        obscureText ? Icons.visibility_off : Icons.visibility,
-                    onChange: (value) {
-                      admin.password = value;
+                  BlocBuilder<PasswordBloc, PasswordState>(
+                    builder: (context, state) {
+                      return EmployeeFormField(
+                        obscureText: state.obscureText,
+                        labelText: 'Password',
+                        prefixIcon: Icons.lock,
+                        suffixIcon: IconButton(
+                            onPressed: () {
+                              state.obscureText
+                                  ? context.read<PasswordBloc>().add(Visible())
+                                  : context
+                                      .read<PasswordBloc>()
+                                      .add(Invisible());
+                            },
+                            icon: Icon(state.obscureText
+                                ? Icons.visibility_off
+                                : Icons.visibility)),
+                        onChange: (value) {
+                          admin.password = value;
+                        },
+                        validator: (String? password) {},
+                        keyboardType: TextInputType.text,
+                        inputFormatters: <TextInputFormatter>[
+                          FilteringTextInputFormatter.singleLineFormatter
+                        ],
+                      );
                     },
-                    validator: (String? password) {},
-                    keyboardType: TextInputType.text,
-                    inputFormatters: <TextInputFormatter>[
-                      FilteringTextInputFormatter.singleLineFormatter
-                    ],
                   ),
                   Box(
                       text: "Login",
