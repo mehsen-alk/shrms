@@ -10,4 +10,9 @@ class Admin {
         email: admin.email, password: admin.password);
     AdminPaths.adminCollection.doc('1').set({'email': admin.email});
   }
+
+  Future<void> loginAdmin(Admin admin) async {
+    AdminPaths.firebaseAuth.signInWithEmailAndPassword(
+        email: admin.email, password: admin.password);
+  }
 }
