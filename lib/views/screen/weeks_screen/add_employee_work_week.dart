@@ -22,7 +22,7 @@ class _AddEmployeeWorkWeekState extends State<AddEmployeeWorkWeek> {
   final EmpWeekFirestoreHelper _helper = EmpWeekFirestoreHelper();
   List<int> hoursCounters = [0, 0, 0, 0, 0, 0, 0];
   List<String> days = ['sat', 'sun', 'mon', 'tue', 'wed', 'the', 'fri'];
-  int? selected;
+  Employee? selected;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -32,18 +32,19 @@ class _AddEmployeeWorkWeekState extends State<AddEmployeeWorkWeek> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            FutureBuilder<List<DropdownMenuItem<int>>>(
+            FutureBuilder<List<DropdownMenuItem<Employee>>>(
               future: dropdownMenuItemGenerator(),
               builder: (BuildContext context,
-                  AsyncSnapshot<List<DropdownMenuItem<int>>> snapshot) {
-                return DropdownButton<int>(
+                  AsyncSnapshot<List<DropdownMenuItem<Employee>>> snapshot) {
+                return DropdownButton<Employee>(
                     value: selected,
                     isExpanded: true,
                     items: snapshot.data,
                     onChanged: (l) {
                       setState(() {
                         selected = l!;
-                        widget.employee.id = selected!;
+                        widget.employee.id = selected!.id;
+                        widget.employee.name = selected!.name;
                       });
                     });
               },
@@ -99,14 +100,14 @@ class _AddEmployeeWorkWeekState extends State<AddEmployeeWorkWeek> {
     );
   }
 
-  Future<List<DropdownMenuItem<int>>> dropdownMenuItemGenerator() async {
-    List<DropdownMenuItem<int>> employeesList = [];
+  Future<List<DropdownMenuItem<Employee>>> dropdownMenuItemGenerator() async {
+    List<DropdownMenuItem<Employee>> employeesList = [];
     EmployeeFirestoreHelper helper = EmployeeFirestoreHelper();
 
     (await helper.employeesList).forEach((employee) {
       employeesList.add(DropdownMenuItem(
         child: Text('${employee.id}  ${employee.name}'),
-        value: employee.id,
+        value: employee,
       ));
     });
 

@@ -26,6 +26,7 @@ class EmpWeekPaths {
   static final CollectionReference empWeekCollection =
       firestore.collection('Emp_Week');
   static const String empId = 'employee_id';
+  static const String empName = 'employee_name';
   static const String weekId = 'week_id';
   static const String sat = 'sat';
   static const String sun = 'sun';

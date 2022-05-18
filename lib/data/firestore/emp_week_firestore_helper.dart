@@ -29,6 +29,7 @@ class EmpWeekFirestoreHelper {
         EmpWeek empWeek = EmpWeek();
 
         empWeek.empID = doc[EmpWeekPaths.empId];
+        empWeek.empName = doc[EmpWeekPaths.empName];
         empWeek.weekID = doc[EmpWeekPaths.weekId];
         empWeek.sat = doc[EmpWeekPaths.sat];
         empWeek.sun = doc[EmpWeekPaths.sun];
@@ -45,12 +46,14 @@ class EmpWeekFirestoreHelper {
     return _empWeek;
   }
 
+  /// add employee work details in a given week
   void addEmployeeWorkWeek(
       {required Employee employee,
       required Week week,
       required EmpWeek weeklyWork}) {
     EmpWeekPaths.empWeekCollection.doc('${week.id}_${employee.id}').set({
       EmpWeekPaths.empId: employee.id,
+      EmpWeekPaths.empName: employee.name,
       EmpWeekPaths.weekId: week.id,
       EmpWeekPaths.sat: weeklyWork.sat,
       EmpWeekPaths.sun: weeklyWork.sun,

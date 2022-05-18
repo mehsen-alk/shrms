@@ -1,6 +1,7 @@
 class EmpWeek {
   EmpWeek(
       {this.empID = 0,
+      this.empName = '',
       this.weekID = 0,
       this.sat = 0,
       this.sun = 0,
@@ -11,6 +12,7 @@ class EmpWeek {
       this.fri = 0});
 
   int empID;
+  String empName;
   int weekID;
   int sat;
   int sun;
