@@ -22,7 +22,6 @@ class _WeekDetailsState extends State<WeekDetails> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
   }
 
@@ -41,23 +40,54 @@ class _WeekDetailsState extends State<WeekDetails> {
         child: const Icon(Icons.add),
       ),
       body: SingleChildScrollView(
-        child: ExpansionPanelList(
-          children: children(),
-          expansionCallback: (index, value) {
-            setState(() {
-              isExpanded[index] = !isExpanded[index];
-            });
+        child: FutureBuilder<List<ExpansionPanel>>(
+          future: children(widget.week),
+          builder: (BuildContext context,
+              AsyncSnapshot<List<ExpansionPanel>> snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const CircularProgressIndicator();
+            } else {
+              return ExpansionPanelList(
+                children: snapshot.data!,
+                expansionCallback: (index, value) {
+                  setState(() {
+                    isExpanded[index] = !isExpanded[index];
+                  });
+                },
+              );
+            }
           },
         ),
       ),
     );
   }
 
-  List<ExpansionPanel> children() {
+  Future<List<ExpansionPanel>> children(Week week) async {
+    List<EmpWeek> empInWeek =
+        await EmpWeekFirestoreHelper().getEmployeesInWeek(week: week);
+
+    List<Text> empInDay = [];
+
     List<ExpansionPanel> expansionPanels = [];
     DateTime? time = widget.week.startingDate;
     for (int i = 0; i < 7; i++) {
+      empInDay = [];
+
+      empInWeek.forEach((element) {
+        List<int> temp = [
+          element.sat,
+          element.sun,
+          element.mon,
+          element.tue,
+          element.wed,
+          element.the,
+          element.fri
+        ];
+        empInDay.add(Text('${element.empID}. ${element.empName}: ${temp[i]}'));
+      });
+
       expansionPanels.add(ExpansionPanel(
+        canTapOnHeader: true,
         headerBuilder: (context, isOpen) => Align(
           alignment: Alignment.centerLeft,
           child: Padding(
@@ -76,7 +106,12 @@ class _WeekDetailsState extends State<WeekDetails> {
         body: Align(
           alignment: Alignment.bottomLeft,
           child: Column(
-            children: const [Text('data')],
+            children: [
+              ListView(
+                shrinkWrap: true,
+                children: empInDay,
+              ),
+            ],
           ),
         ),
         isExpanded: isExpanded[i],

@@ -29,6 +29,7 @@ class EmpWeekFirestoreHelper {
         EmpWeek empWeek = EmpWeek();
 
         empWeek.empID = doc[EmpWeekPaths.empId];
+        empWeek.empName = doc[EmpWeekPaths.empName];
         empWeek.weekID = doc[EmpWeekPaths.weekId];
         empWeek.sat = doc[EmpWeekPaths.sat];
         empWeek.sun = doc[EmpWeekPaths.sun];
