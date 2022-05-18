@@ -40,7 +40,17 @@ class AdminScreen extends StatelessWidget {
                     onChange: (value) {
                       admin.email = value;
                     },
-                    validator: (String? email) {},
+                    validator: (String? email) {
+                      if (email == null || email == '' || email.isEmpty) {
+                        return 'Can\'t be empty';
+                      } else if (!email.contains('@') || !email.contains('.')) {
+                        return 'Invalid email format';
+                      } else if (email.length < 12) {
+                        return 'too short';
+                      } else {
+                        return null;
+                      }
+                    },
                     keyboardType: TextInputType.emailAddress,
                     inputFormatters: <TextInputFormatter>[
                       FilteringTextInputFormatter.singleLineFormatter
@@ -60,13 +70,26 @@ class AdminScreen extends StatelessWidget {
                                       .read<PasswordBloc>()
                                       .add(Invisible());
                             },
-                            icon: Icon(state.obscureText
-                                ? Icons.visibility_off
-                                : Icons.visibility)),
+                            icon: Icon(
+                              state.obscureText
+                                  ? Icons.visibility_off
+                                  : Icons.visibility,
+                              color: const Color(0XFF329D9C),
+                            )),
                         onChange: (value) {
                           admin.password = value;
                         },
-                        validator: (String? password) {},
+                        validator: (String? password) {
+                          if (password == null ||
+                              password == '' ||
+                              password.isEmpty) {
+                            return "Can't be empty";
+                          } else if (password.length < 7) {
+                            return "Password must not be at least than 7 characters long";
+                          } else {
+                            return null;
+                          }
+                        },
                         keyboardType: TextInputType.text,
                         inputFormatters: <TextInputFormatter>[
                           FilteringTextInputFormatter.singleLineFormatter
@@ -77,28 +100,43 @@ class AdminScreen extends StatelessWidget {
                   Box(
                       text: "Login",
                       onPress: () async {
-                        try {
-                          _helper.loginAdmin(admin);
-                          if (await _helper.loginAdmin(admin)) {
-                            Navigator.pushNamed(context, HomeScreen.id);
-                          } else if (await _helper.loginAdmin(admin) == false) {
-                            showDialog(
-                                context: context,
-                                builder: (context) {
-                                  return AlertDialog(
-                                    title: const Text('Email is incorrect'),
-                                    actions: [
-                                      ElevatedButton(
+                        if (_formKey.currentState!.validate()) {
+                          try {
+                            _helper.loginAdmin(admin);
+                            if (await _helper.loginAdmin(admin)) {
+                              Navigator.pushNamed(context, HomeScreen.id);
+                            } else if (await _helper.loginAdmin(admin) ==
+                                false) {
+                              showDialog(
+                                  context: context,
+                                  builder: (context) {
+                                    return AlertDialog(
+                                      backgroundColor: const Color(0XFF205072),
+                                      title: const Text(
+                                        'Email or Password is incorrect',
+                                        style: TextStyle(color: Colors.white),
+                                      ),
+                                      actions: [
+                                        ElevatedButton(
                                           onPressed: () {
                                             Navigator.pop(context);
                                           },
-                                          child: const Text('OK'))
-                                    ],
-                                  );
-                                });
+                                          child: const Text('OK'),
+                                          style: ButtonStyle(
+                                            backgroundColor:
+                                                MaterialStateProperty.all<
+                                                    Color>(
+                                              const Color(0XFF56C596),
+                                            ),
+                                          ),
+                                        )
+                                      ],
+                                    );
+                                  });
+                            }
+                          } catch (e) {
+                            print('this is error->$e');
                           }
-                        } catch (e) {
-                          print('this is error->$e');
                         }
                       }),
                 ],
