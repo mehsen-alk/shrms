@@ -45,7 +45,7 @@ class _EditEmployeeState extends State<EditEmployee> {
                       onChange: (value) {
                         widget.employee.name = value;
                       },
-                      icon: Icons.person,
+                      prefixIcon: Icons.person,
                       labelText: 'Name',
                       validator: (String? name) {
                         if (name == null || name == '' || name.isEmpty) {
@@ -58,6 +58,7 @@ class _EditEmployeeState extends State<EditEmployee> {
                       inputFormatters: <TextInputFormatter>[
                         FilteringTextInputFormatter.singleLineFormatter
                       ],
+                      obscureText: false,
                     ),
                     EmployeeFormField(
                       controller: TextEditingController(
@@ -65,7 +66,7 @@ class _EditEmployeeState extends State<EditEmployee> {
                       onChange: (value) {
                         widget.employee.salary = int.parse(value);
                       },
-                      icon: Icons.account_balance_wallet_outlined,
+                      prefixIcon: Icons.account_balance_wallet_outlined,
                       labelText: 'Salary',
                       validator: (String? salary) {
                         if (salary == null || salary == '' || salary.isEmpty) {
@@ -80,6 +81,7 @@ class _EditEmployeeState extends State<EditEmployee> {
                       inputFormatters: <TextInputFormatter>[
                         FilteringTextInputFormatter.digitsOnly
                       ],
+                      obscureText: false,
                     ),
                     Box(
                       text: 'Edit',

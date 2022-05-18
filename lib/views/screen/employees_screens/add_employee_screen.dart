@@ -30,7 +30,7 @@ class AddEmployee extends StatelessWidget {
                 children: [
                   EmployeeFormField(
                     labelText: 'Name',
-                    icon: Icons.person,
+                    prefixIcon: Icons.person,
                     onChange: (value) {
                       name = value;
                     },
@@ -45,10 +45,11 @@ class AddEmployee extends StatelessWidget {
                     inputFormatters: <TextInputFormatter>[
                       FilteringTextInputFormatter.singleLineFormatter
                     ],
+                    obscureText: false,
                   ),
                   EmployeeFormField(
                     labelText: 'Salary',
-                    icon: Icons.account_balance_wallet_outlined,
+                    prefixIcon: Icons.account_balance_wallet_outlined,
                     onChange: (value) {
                       salary = int.parse(value);
                     },
@@ -65,6 +66,7 @@ class AddEmployee extends StatelessWidget {
                     inputFormatters: <TextInputFormatter>[
                       FilteringTextInputFormatter.digitsOnly
                     ],
+                    obscureText: false,
                   ),
                   Box(
                       text: "Add",

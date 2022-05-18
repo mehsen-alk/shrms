@@ -3,30 +3,35 @@ import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class EmployeeFormField extends StatelessWidget {
-  const EmployeeFormField({
-    Key? key,
-    required this.onChange,
-    required this.labelText,
-    required this.icon,
-    required this.validator,
-    required this.keyboardType,
-    required this.inputFormatters,
-    this.controller,
-  }) : super(key: key);
+  const EmployeeFormField(
+      {Key? key,
+      required this.onChange,
+      required this.labelText,
+      required this.prefixIcon,
+      required this.validator,
+      required this.keyboardType,
+      required this.inputFormatters,
+      this.controller,
+      required this.obscureText,
+      this.suffixIcon})
+      : super(key: key);
 
   final Function(String) onChange;
   final String labelText;
-  final IconData icon;
+  final IconData prefixIcon;
+  final IconData? suffixIcon;
   final String? Function(String?) validator;
   final TextInputType keyboardType;
   final List<TextInputFormatter> inputFormatters;
   final TextEditingController? controller;
+  final bool obscureText;
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.symmetric(vertical: 5.sp, horizontal: 30.sp),
       child: TextFormField(
+        obscureText: obscureText,
         autovalidateMode: AutovalidateMode.onUserInteraction,
         controller: controller,
         onChanged: onChange,
@@ -42,8 +47,12 @@ class EmployeeFormField extends StatelessWidget {
             ),
           ),
           prefixIcon: Icon(
-            icon,
+            prefixIcon,
             color: const Color(0XFF329D9C),
+          ),
+          suffixIcon: IconButton(
+            icon: Icon(suffixIcon, color: const Color(0XFF329D9C)),
+            onPressed: () {},
           ),
           focusedBorder: const OutlineInputBorder(
             borderSide: BorderSide(
