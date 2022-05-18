@@ -7,6 +7,7 @@ import 'package:shrms/views/screen/employees_screens/add_employee_screen.dart';
 
 class EmployeeScreen extends StatefulWidget {
   static const String id = 'EmployeeScreen';
+
   const EmployeeScreen({Key? key}) : super(key: key);
 
   @override
@@ -14,32 +15,36 @@ class EmployeeScreen extends StatefulWidget {
 }
 
 class _EmployeeScreenState extends State<EmployeeScreen> {
+  final Employee employee = Employee();
   final EmployeeFirestoreHelper _helper = EmployeeFirestoreHelper();
+
   @override
   Widget build(BuildContext context) {
-    return ScreenUtilInit(builder: (BuildContext context) {
-      return Scaffold(
-        appBar: AppBar(
-          title: const Text("SHRMS"),
-        ),
-        body: RefreshIndicator(
-          onRefresh: () async {
-            await _helper.updateEmployeesList();
-            setState(() {});
-          },
-          child: FutureBuilder<List<Employee>>(
-            future: _helper.employeesList,
-            builder: _futureBuilder,
+    return ScreenUtilInit(
+      builder: (BuildContext context) {
+        return Scaffold(
+          appBar: AppBar(
+            title: const Text("SHRMS"),
           ),
-        ),
-        floatingActionButton: FloatingActionButton(
-          onPressed: () =>
-              Navigator.pushReplacementNamed(context, AddEmployee.id),
-          child: const Icon(Icons.add),
-          backgroundColor: Color(0XFF329D9C),
-        ),
-      );
-    });
+          body: RefreshIndicator(
+            onRefresh: () async {
+              await _helper.updateEmployeesList();
+              setState(() {});
+            },
+            child: FutureBuilder<List<Employee>>(
+              future: _helper.employeesList,
+              builder: _futureBuilder,
+            ),
+          ),
+          floatingActionButton: FloatingActionButton(
+            onPressed: () =>
+                Navigator.pushReplacementNamed(context, AddEmployee.id),
+            child: const Icon(Icons.add),
+            backgroundColor: const Color(0XFF329D9C),
+          ),
+        );
+      },
+    );
   }
 
   Widget _futureBuilder(

@@ -15,84 +15,94 @@ class EmployeeBubble extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    EmployeeFirestoreHelper employeeFirestoreHelper = EmployeeFirestoreHelper();
+    EmployeeFirestoreHelper _helper = EmployeeFirestoreHelper();
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 10.sp, vertical: 5.sp),
       child: GestureDetector(
         onTap: () {
           showModalBottomSheet(
-            backgroundColor: const Color(0XFF205072),
             context: context,
+            backgroundColor: const Color(0XFF205072),
             builder: (context) {
-              return SingleChildScrollView(
-                child: Column(
-                  children: [
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.baseline,
-                      textBaseline: TextBaseline.alphabetic,
-                      children: [
-                        Padding(
-                          padding: EdgeInsets.all(8.sp),
-                          child: const Icon(
-                            Icons.person,
-                            color: Colors.white,
-                            size: 50.0,
-                          ),
-                        ),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.baseline,
-                          textBaseline: TextBaseline.alphabetic,
-                          children: [
-                            EmployeeInfo(text: 'ID: ${employee.id}'),
-                            EmployeeInfo(text: 'Name: ${employee.name}'),
-                            EmployeeInfo(text: 'Salary: ${employee.salary}'),
-                          ],
-                        ),
-                      ],
-                    ),
-                    Padding(
-                      padding: EdgeInsets.symmetric(vertical: 10.sp),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
+              return Container(
+                constraints: BoxConstraints(maxHeight: 300.h),
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.baseline,
+                        textBaseline: TextBaseline.alphabetic,
                         children: [
-                          ElevatedButton(
-                            onPressed: () {
-                              employeeFirestoreHelper.deleteEmployee(
-                                  employee: employee);
-                              Navigator.pop(context);
-                            },
-                            child: Icon(
-                              Icons.delete,
-                              size: 28.sp,
-                            ),
-                            style: ButtonStyle(
-                              backgroundColor:
-                                  MaterialStateProperty.all<Color>(Colors.red),
-                              fixedSize: MaterialStateProperty.all<Size>(
-                                Size(150.w, 25.w),
-                              ),
+                          Padding(
+                            padding: EdgeInsets.all(8.sp),
+                            child: const Icon(
+                              Icons.person,
+                              color: Colors.white,
+                              size: 50.0,
                             ),
                           ),
-                          SizedBox(width: 5.sp),
-                          ElevatedButton(
-                            onPressed: () {
-                              Navigator.pushNamed(context, EditEmployee.id,
-                                  arguments: employee);
-                            },
-                            child: Icon(
-                              Icons.edit,
-                              size: 28.sp,
-                            ),
-                            style: ButtonStyle(
-                              fixedSize: MaterialStateProperty.all(
-                                Size(150.w, 25.w),
-                              ),
-                            ),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.baseline,
+                            textBaseline: TextBaseline.alphabetic,
+                            children: [
+                              EmployeeInfo(text: 'ID: ${employee.id}'),
+                              EmployeeInfo(text: 'Name: ${employee.name}'),
+                              EmployeeInfo(text: 'Sat:'),
+                              EmployeeInfo(text: 'Sun:'),
+                              EmployeeInfo(text: 'Mon:'),
+                              EmployeeInfo(text: 'Tue:'),
+                              EmployeeInfo(text: 'Wen:'),
+                              EmployeeInfo(text: 'The:'),
+                              EmployeeInfo(text: 'Fri:'),
+                              EmployeeInfo(text: 'Total Salary:'),
+                            ],
                           ),
                         ],
                       ),
-                    ),
-                  ],
+                      Padding(
+                        padding: EdgeInsets.symmetric(vertical: 10.sp),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            ElevatedButton(
+                              onPressed: () {
+                                _helper.deleteEmployee(employee: employee);
+                                Navigator.pop(context);
+                              },
+                              child: Icon(
+                                Icons.delete,
+                                size: 28.sp,
+                              ),
+                              style: ButtonStyle(
+                                backgroundColor:
+                                    MaterialStateProperty.all<Color>(
+                                        Colors.red),
+                                fixedSize: MaterialStateProperty.all<Size>(
+                                  Size(150.w, 25.w),
+                                ),
+                              ),
+                            ),
+                            SizedBox(width: 5.sp),
+                            ElevatedButton(
+                              onPressed: () {
+                                Navigator.pushNamed(context, EditEmployee.id,
+                                    arguments: employee);
+                              },
+                              child: Icon(
+                                Icons.edit,
+                                size: 28.sp,
+                              ),
+                              style: ButtonStyle(
+                                fixedSize: MaterialStateProperty.all(
+                                  Size(150.w, 25.w),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               );
             },
