@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:shrms/data/firestore/admin_firestore_helper.dart';
-import 'package:shrms/data/firestore/paths.dart';
 import 'package:shrms/models/admin.dart';
 import 'package:shrms/views/components/box_button.dart';
 import 'package:shrms/views/components/employee_form_field.dart';
@@ -39,7 +38,7 @@ class AdminScreen extends StatelessWidget {
                       admin.email = value;
                     },
                     validator: (String? email) {},
-                    keyboardType: TextInputType.text,
+                    keyboardType: TextInputType.emailAddress,
                     inputFormatters: <TextInputFormatter>[
                       FilteringTextInputFormatter.singleLineFormatter
                     ],
@@ -64,7 +63,24 @@ class AdminScreen extends StatelessWidget {
                       onPress: () async {
                         try {
                           _helper.loginAdmin(admin);
-                          Navigator.pushNamed(context, HomeScreen.id);
+                          if (await _helper.loginAdmin(admin)) {
+                            Navigator.pushNamed(context, HomeScreen.id);
+                          } else if (await _helper.loginAdmin(admin) == false) {
+                            showDialog(
+                                context: context,
+                                builder: (context) {
+                                  return AlertDialog(
+                                    title: const Text('Email is incorrect'),
+                                    actions: [
+                                      ElevatedButton(
+                                          onPressed: () {
+                                            Navigator.pop(context);
+                                          },
+                                          child: const Text('OK'))
+                                    ],
+                                  );
+                                });
+                          }
                         } catch (e) {
                           print('this is error->$e');
                         }
