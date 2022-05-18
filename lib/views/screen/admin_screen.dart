@@ -63,9 +63,7 @@ class AdminScreen extends StatelessWidget {
                       text: "Login",
                       onPress: () async {
                         try {
-                          AdminPaths.adminCollection.doc().id.isNotEmpty
-                              ? _helper.loginAdmin(admin)
-                              : _helper.createAdmin(admin);
+                          _helper.loginAdmin(admin);
                           Navigator.pushNamed(context, HomeScreen.id);
                         } catch (e) {
                           print('this is error->$e');
