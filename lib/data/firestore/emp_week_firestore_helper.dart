@@ -47,22 +47,26 @@ class EmpWeekFirestoreHelper {
   }
 
   /// add employee work details in a given week
-  void addEmployeeWorkWeek(
-      {required Employee employee,
-      required Week week,
-      required EmpWeek weeklyWork}) {
-    EmpWeekPaths.empWeekCollection.doc('${week.id}_${employee.id}').set({
-      EmpWeekPaths.empId: employee.id,
-      EmpWeekPaths.empName: employee.name,
-      EmpWeekPaths.weekId: week.id,
-      EmpWeekPaths.sat: weeklyWork.sat,
-      EmpWeekPaths.sun: weeklyWork.sun,
-      EmpWeekPaths.mon: weeklyWork.mon,
-      EmpWeekPaths.tue: weeklyWork.tue,
-      EmpWeekPaths.wed: weeklyWork.wed,
-      EmpWeekPaths.the: weeklyWork.the,
-      EmpWeekPaths.fri: weeklyWork.fri,
-    });
+  bool addEmployeeWorkWeek(
+      {Employee? employee, Week? week, EmpWeek? weeklyWork}) {
+    try {
+      EmpWeekPaths.empWeekCollection.doc('${week?.id}_${employee?.id}').set({
+        EmpWeekPaths.empId: employee?.id,
+        EmpWeekPaths.empName: employee?.name,
+        EmpWeekPaths.weekId: week?.id,
+        EmpWeekPaths.sat: weeklyWork?.sat,
+        EmpWeekPaths.sun: weeklyWork?.sun,
+        EmpWeekPaths.mon: weeklyWork?.mon,
+        EmpWeekPaths.tue: weeklyWork?.tue,
+        EmpWeekPaths.wed: weeklyWork?.wed,
+        EmpWeekPaths.the: weeklyWork?.the,
+        EmpWeekPaths.fri: weeklyWork?.fri,
+      });
+      return true;
+    } catch (e) {
+      print('this is error--> $e');
+      return false;
+    }
   }
 
   Future<List<EmpWeek>> getEmployeesInWeek({required Week week}) async {

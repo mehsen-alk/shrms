@@ -31,8 +31,10 @@ class _DayCardState extends State<DayCard> {
               IconButton(
                 icon: const Icon(Icons.remove),
                 onPressed: () {
-                  widget.counter--;
-                  widget.onChange(widget.counter);
+                  if (widget.counter != 0) {
+                    widget.counter--;
+                    widget.onChange(widget.counter);
+                  }
                 },
               ),
               Text(widget.counter.toString()),
