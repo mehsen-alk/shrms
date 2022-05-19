@@ -22,11 +22,6 @@ class _WeekDetailsState extends State<WeekDetails> {
   late List<EmpWeek> empWeek;
 
   @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
