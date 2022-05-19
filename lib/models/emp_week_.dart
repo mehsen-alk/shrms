@@ -9,7 +9,8 @@ class EmpWeek {
       this.tue = 0,
       this.wed = 0,
       this.the = 0,
-      this.fri = 0});
+      this.fri = 0,
+      this.totalWork = 0});
 
   int empID;
   String empName;
@@ -21,4 +22,5 @@ class EmpWeek {
   int wed;
   int the;
   int fri;
+  int totalWork;
 }

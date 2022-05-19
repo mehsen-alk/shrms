@@ -11,21 +11,20 @@ class EmpWeekFirestoreHelper {
   /// get the existing list or fetch it from cloud if its empty
   Future<List<EmpWeek>> get empWeekList async {
     if (_empWeek.isEmpty) {
-      await updateEmployeesList();
+      await updateEmployeesWeeksList();
     }
     return _empWeek;
   }
 
   /// fetch all records in firestore
-  Future<List<EmpWeek>> updateEmployeesList() async {
+  Future<List<EmpWeek>> updateEmployeesWeeksList() async {
+    print(1.3);
     // clear the existing list to avoiding duplicate data
     _empWeek = [];
 
     // fetch data from the cloud and but them in the list
-    await EmpWeekPaths.empWeekCollection
-        .get()
-        .then((QuerySnapshot empWeeks) async {
-      for (var doc in empWeeks.docs) {
+    await EmpWeekPaths.empWeekCollection.get().then((QuerySnapshot empWeeks) {
+      empWeeks.docs.forEach((doc) {
         EmpWeek empWeek = EmpWeek();
 
         empWeek.empID = doc[EmpWeekPaths.empId];
@@ -40,7 +39,7 @@ class EmpWeekFirestoreHelper {
         empWeek.fri = doc[EmpWeekPaths.fri];
 
         _empWeek.add(empWeek);
-      }
+      });
     });
 
     return _empWeek;
@@ -80,5 +79,30 @@ class EmpWeekFirestoreHelper {
     });
 
     return employeesInWeek;
+  }
+
+  Future<List<EmpWeek>> getEmployeeWeeklyWork(Employee employee) async {
+    await updateEmployeesWeeksList();
+
+    List<EmpWeek> weeklyWork = [];
+
+    (await empWeekList).forEach((empWeek) {
+      if (empWeek.empID == employee.id) {
+        empWeek.totalWork = 0;
+        empWeek.totalWork += empWeek.sat;
+        empWeek.totalWork += empWeek.sun;
+        empWeek.totalWork += empWeek.mon;
+        empWeek.totalWork += empWeek.tue;
+        empWeek.totalWork += empWeek.wed;
+        empWeek.totalWork += empWeek.the;
+        empWeek.totalWork += empWeek.fri;
+        weeklyWork.add(empWeek);
+      }
+    });
+
+    print(2);
+    print(weeklyWork);
+
+    return weeklyWork;
   }
 }

@@ -24,7 +24,7 @@ class EmployeeFirestoreHelper {
     // fetch data from the cloud and but them in the list
     await EmployeePaths.employeesCollection
         .get()
-        .then((QuerySnapshot employees) async {
+        .then((QuerySnapshot employees) {
       for (var doc in employees.docs) {
         Employee employee = Employee();
 

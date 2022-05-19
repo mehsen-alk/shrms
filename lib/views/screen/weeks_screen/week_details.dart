@@ -41,7 +41,7 @@ class _WeekDetailsState extends State<WeekDetails> {
       ),
       body: RefreshIndicator(
         onRefresh: () async {
-          await EmpWeekFirestoreHelper().updateEmployeesList();
+          await EmpWeekFirestoreHelper().updateEmployeesWeeksList();
           setState(() {});
         },
         child: SingleChildScrollView(
