@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:shrms/data/firestore/emp_week_firestore_helper.dart';
 import 'package:shrms/models/emp_week_.dart';
 import 'package:shrms/models/week.dart';
@@ -51,7 +52,9 @@ class _WeekDetailsState extends State<WeekDetails> {
             builder: (BuildContext context,
                 AsyncSnapshot<List<ExpansionPanel>> snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
-                return const CircularProgressIndicator();
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
               } else {
                 return ExpansionPanelList(
                   children: snapshot.data!,
@@ -98,7 +101,7 @@ class _WeekDetailsState extends State<WeekDetails> {
         headerBuilder: (context, isOpen) => Align(
           alignment: Alignment.centerLeft,
           child: Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: EdgeInsets.all(8.sp),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [

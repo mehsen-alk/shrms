@@ -3,7 +3,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:shrms/data/firestore/paths.dart';
 import 'package:shrms/views/components/box_button.dart';
 import 'package:shrms/views/screen/admin_screens/admin_page.dart';
-import 'package:shrms/views/screen/admin_screens/admin_screen.dart';
 import 'package:shrms/views/screen/employees_screens/employee_screen.dart';
 import 'package:shrms/views/screen/weeks_screen/weeks_screen.dart';
 

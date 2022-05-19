@@ -5,7 +5,6 @@ import 'package:shrms/data/firestore/paths.dart';
 import 'package:shrms/models/employee.dart';
 import 'package:shrms/models/week.dart';
 import 'package:shrms/views/screen/admin_screens/admin_page.dart';
-import 'package:shrms/views/screen/admin_screens/admin_screen.dart';
 import 'package:shrms/views/screen/employees_screens/add_employee_screen.dart';
 import 'package:shrms/views/screen/employees_screens/edit_employee_screen.dart';
 import 'package:shrms/views/screen/weeks_screen/add_employee_work_week.dart';

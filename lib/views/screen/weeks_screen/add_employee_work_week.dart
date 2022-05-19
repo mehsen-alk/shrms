@@ -75,7 +75,6 @@ class _AddEmployeeWorkWeekState extends State<AddEmployeeWorkWeek> {
                           (states) => Colors.teal)),
                   child: const Text('submit'),
                   onPressed: () {
-                    // todo: firebase stuff to add the week and a little ui notify to know what state has done
                     if (selected != null) {
                       widget.weeklyWork.sat = hoursCounters[0];
                       widget.weeklyWork.sun = hoursCounters[1];
@@ -89,6 +88,24 @@ class _AddEmployeeWorkWeekState extends State<AddEmployeeWorkWeek> {
                           employee: widget.employee,
                           week: widget.week,
                           weeklyWork: widget.weeklyWork);
+                    }
+                    if (_helper.addEmployeeWorkWeek() && selected != null) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          backgroundColor: Colors.green,
+                          content: Text('Added successfully'),
+                          duration: Duration(milliseconds: 300),
+                        ),
+                      );
+                    } else if (!_helper.addEmployeeWorkWeek() ||
+                        selected == null) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          backgroundColor: Colors.red,
+                          content: Text('Addition failed, please try again'),
+                          duration: Duration(milliseconds: 300),
+                        ),
+                      );
                     }
                   },
                 )
