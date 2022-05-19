@@ -89,11 +89,11 @@ class _AddEmployeeWorkWeekState extends State<AddEmployeeWorkWeek> {
                           week: widget.week,
                           weeklyWork: widget.weeklyWork);
                     }
-                    if (_helper.addEmployeeWorkWeek(
+                    if (selected != null &&
+                        _helper.addEmployeeWorkWeek(
                             employee: widget.employee,
                             week: widget.week,
-                            weeklyWork: widget.weeklyWork) &&
-                        selected != null) {
+                            weeklyWork: widget.weeklyWork)) {
                       ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(
                           backgroundColor: Colors.green,
@@ -101,11 +101,7 @@ class _AddEmployeeWorkWeekState extends State<AddEmployeeWorkWeek> {
                           duration: Duration(milliseconds: 300),
                         ),
                       );
-                    } else if (!_helper.addEmployeeWorkWeek(
-                            employee: widget.employee,
-                            week: widget.week,
-                            weeklyWork: widget.weeklyWork) ||
-                        selected == null) {
+                    } else if (selected == null) {
                       ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(
                           backgroundColor: Colors.red,
