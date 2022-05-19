@@ -106,7 +106,7 @@ class AdminScreen extends StatelessWidget {
                               onPress: () async {
                                 if (_formKey.currentState!.validate()) {
                                   context.read<LoadingBloc>().add(LoadingOn());
-                                  try {
+                                  try {//*
                                     _helper.loginAdmin(admin);
                                     if (await _helper.loginAdmin(admin)) {
                                       Navigator.pushNamed(
