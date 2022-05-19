@@ -84,29 +84,24 @@ class _AddEmployeeWorkWeekState extends State<AddEmployeeWorkWeek> {
                       widget.weeklyWork.the = hoursCounters[5];
                       widget.weeklyWork.fri = hoursCounters[6];
 
-                      _helper.addEmployeeWorkWeek(
+                      if (_helper.addEmployeeWorkWeek(
                           employee: widget.employee,
-                          week: widget.week,
-                          weeklyWork: widget.weeklyWork);
-                    }
-                    if (selected != null &&
-                        _helper.addEmployeeWorkWeek(
-                            employee: widget.employee,
-                            week: widget.week,
-                            weeklyWork: widget.weeklyWork)) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(
-                          backgroundColor: Colors.green,
-                          content: Text('Added successfully'),
-                          duration: Duration(milliseconds: 300),
-                        ),
-                      );
-                    } else if (selected == null) {
+                          week: widget.week, //
+                          weeklyWork: widget.weeklyWork)) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            backgroundColor: Colors.green,
+                            content: Text('Added successfully'),
+                            duration: Duration(seconds: 1),
+                          ),
+                        );
+                      }
+                    } else {
                       ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(
                           backgroundColor: Colors.red,
                           content: Text('Addition failed, please try again'),
-                          duration: Duration(milliseconds: 300),
+                          duration: Duration(seconds: 1),
                         ),
                       );
                     }
