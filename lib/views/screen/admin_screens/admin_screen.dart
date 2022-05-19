@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:shrms/bloc/password_bloc.dart';
+import 'package:shrms/bloc/loading/loading_bloc.dart';
+import 'package:shrms/bloc/loading/loading_bloc.dart';
 import 'package:shrms/bloc/password_bloc.dart';
 import 'package:shrms/data/firestore/admin_firestore_helper.dart';
 import 'package:shrms/models/admin.dart';
@@ -11,8 +12,6 @@ import 'package:shrms/views/components/employee_form_field.dart';
 import 'package:shrms/views/screen/home_screen.dart';
 
 class AdminScreen extends StatelessWidget {
-  static const String id = 'AdminScreen';
-
   const AdminScreen({Key? key}) : super(key: key);
 
   @override
@@ -97,48 +96,64 @@ class AdminScreen extends StatelessWidget {
                       );
                     },
                   ),
-                  Box(
-                      text: "Login",
-                      onPress: () async {
-                        if (_formKey.currentState!.validate()) {
-                          try {
-                            _helper.loginAdmin(admin);
-                            if (await _helper.loginAdmin(admin)) {
-                              Navigator.pushNamed(context, HomeScreen.id);
-                            } else if (await _helper.loginAdmin(admin) ==
-                                false) {
-                              showDialog(
-                                  context: context,
-                                  builder: (context) {
-                                    return AlertDialog(
-                                      backgroundColor: const Color(0XFF205072),
-                                      title: const Text(
-                                        'Email or Password is incorrect',
-                                        style: TextStyle(color: Colors.white),
-                                      ),
-                                      actions: [
-                                        ElevatedButton(
-                                          onPressed: () {
-                                            Navigator.pop(context);
-                                          },
-                                          child: const Text('OK'),
-                                          style: ButtonStyle(
-                                            backgroundColor:
-                                                MaterialStateProperty.all<
-                                                    Color>(
-                                              const Color(0XFF56C596),
-                                            ),
-                                          ),
-                                        )
-                                      ],
-                                    );
-                                  });
-                            }
-                          } catch (e) {
-                            print('this is error->$e');
-                          }
-                        }
-                      }),
+                  BlocBuilder<LoadingBloc, LoadingState>(
+                    builder: (context, state) {
+                      return state.isLoadnig
+                          ? const CircularProgressIndicator(
+                              color: Color(0XFF56C596))
+                          : Box(
+                              text: "Login",
+                              onPress: () async {
+                                if (_formKey.currentState!.validate()) {
+                                  context.read<LoadingBloc>().add(LoadingOn());
+                                  try {
+                                    _helper.loginAdmin(admin);
+                                    if (await _helper.loginAdmin(admin)) {
+                                      Navigator.pushNamed(
+                                          context, HomeScreen.id);
+                                    } else if (await _helper
+                                            .loginAdmin(admin) ==
+                                        false) {
+                                      showDialog(
+                                          context: context,
+                                          builder: (context) {
+                                            return AlertDialog(
+                                              backgroundColor:
+                                                  const Color(0XFF205072),
+                                              title: const Text(
+                                                'Email or Password is incorrect',
+                                                style: TextStyle(
+                                                    color: Colors.white),
+                                              ),
+                                              actions: [
+                                                ElevatedButton(
+                                                  onPressed: () {
+                                                    Navigator.pop(context);
+                                                    context
+                                                        .read<LoadingBloc>()
+                                                        .add(LoadingOff());
+                                                  },
+                                                  child: const Text('OK'),
+                                                  style: ButtonStyle(
+                                                    backgroundColor:
+                                                        MaterialStateProperty
+                                                            .all<Color>(
+                                                      const Color(0XFF56C596),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
+                                            );
+                                          });
+                                    }
+                                  } catch (e) {
+                                    print('this is error->$e');
+                                  }
+                                }
+                              },
+                            );
+                    },
+                  ),
                 ],
               ),
             ),

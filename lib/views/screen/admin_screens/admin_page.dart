@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:shrms/bloc/loading/loading_bloc.dart';
 import 'package:shrms/bloc/password_bloc.dart';
 import 'package:shrms/views/screen/admin_screens/admin_screen.dart';
 
@@ -9,9 +10,13 @@ class AdminPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (_) => PasswordBloc(),
-      child: const AdminScreen(),
-    );
+    return MultiBlocProvider(providers: [
+      BlocProvider<PasswordBloc>(
+        create: (BuildContext context) => PasswordBloc(),
+      ),
+      BlocProvider<LoadingBloc>(
+        create: (BuildContext context) => LoadingBloc(),
+      ),
+    ], child: const AdminScreen());
   }
 }
