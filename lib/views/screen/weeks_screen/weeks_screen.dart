@@ -59,7 +59,7 @@ class _WeeksScreenState extends State<WeeksScreen> {
             children: weeksBubble,
           );
         } else {
-          return const Center(child: Text('no data'));
+          return const Center(child: Text('There are no weeks'));
         }
       }
     }

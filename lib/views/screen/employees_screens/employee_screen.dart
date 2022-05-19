@@ -64,7 +64,7 @@ class _EmployeeScreenState extends State<EmployeeScreen> {
             children: employeesBubble,
           );
         } else {
-          return const Center(child: Text('no data'));
+          return const Center(child: Text('There are no employees'));
         }
       }
     }

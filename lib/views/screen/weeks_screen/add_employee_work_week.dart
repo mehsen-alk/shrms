@@ -86,7 +86,7 @@ class _AddEmployeeWorkWeekState extends State<AddEmployeeWorkWeek> {
 
                       if (_helper.addEmployeeWorkWeek(
                           employee: widget.employee,
-                          week: widget.week, //
+                          week: widget.week,
                           weeklyWork: widget.weeklyWork)) {
                         ScaffoldMessenger.of(context).showSnackBar(
                           const SnackBar(
