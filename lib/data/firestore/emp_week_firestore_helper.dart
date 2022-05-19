@@ -18,7 +18,6 @@ class EmpWeekFirestoreHelper {
 
   /// fetch all records in firestore
   Future<List<EmpWeek>> updateEmployeesWeeksList() async {
-    print(1.3);
     // clear the existing list to avoiding duplicate data
     _empWeek = [];
 
@@ -106,8 +105,9 @@ class EmpWeekFirestoreHelper {
       }
     });
 
-    print(2);
-    print(weeklyWork);
+    weeklyWork.sort((w1, w2) {
+      return (w1.weekID > w2.weekID) ? 1 : 0;
+    });
 
     return weeklyWork;
   }
