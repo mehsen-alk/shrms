@@ -3,12 +3,13 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:shrms/bloc/loading/loading_bloc.dart';
-import 'package:shrms/bloc/password_bloc.dart';
 import 'package:shrms/data/firestore/admin_firestore_helper.dart';
 import 'package:shrms/models/admin.dart';
 import 'package:shrms/views/components/box_button.dart';
 import 'package:shrms/views/components/employee_form_field.dart';
 import 'package:shrms/views/screen/home_screen.dart';
+
+import '../../../bloc/password_bloc.dart';
 
 class AdminScreen extends StatelessWidget {
   const AdminScreen({Key? key}) : super(key: key);
