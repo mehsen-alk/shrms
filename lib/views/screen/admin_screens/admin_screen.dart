@@ -3,7 +3,6 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:shrms/bloc/loading/loading_bloc.dart';
-import 'package:shrms/bloc/loading/loading_bloc.dart';
 import 'package:shrms/bloc/password_bloc.dart';
 import 'package:shrms/data/firestore/admin_firestore_helper.dart';
 import 'package:shrms/models/admin.dart';
@@ -97,16 +96,19 @@ class AdminScreen extends StatelessWidget {
                     },
                   ),
                   BlocBuilder<LoadingBloc, LoadingState>(
-                    builder: (context, state) {
+                    builder: (context1, state) {
                       return state.isLoadnig
-                          ? const CircularProgressIndicator(
-                              color: Color(0XFF56C596))
+                          ? Padding(
+                              padding: EdgeInsets.all(30.sp),
+                              child: const CircularProgressIndicator(
+                                  color: Color(0XFF56C596)),
+                            )
                           : Box(
                               text: "Login",
                               onPress: () async {
                                 if (_formKey.currentState!.validate()) {
-                                  context.read<LoadingBloc>().add(LoadingOn());
-                                  try {//*
+                                  context1.read<LoadingBloc>().add(LoadingOn());
+                                  try {
                                     _helper.loginAdmin(admin);
                                     if (await _helper.loginAdmin(admin)) {
                                       Navigator.pushNamed(
@@ -128,10 +130,10 @@ class AdminScreen extends StatelessWidget {
                                               actions: [
                                                 ElevatedButton(
                                                   onPressed: () {
-                                                    Navigator.pop(context);
-                                                    context
+                                                    context1
                                                         .read<LoadingBloc>()
                                                         .add(LoadingOff());
+                                                    Navigator.pop(context);
                                                   },
                                                   child: const Text('OK'),
                                                   style: ButtonStyle(
