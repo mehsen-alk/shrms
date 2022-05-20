@@ -55,7 +55,7 @@ class AdminScreen extends StatelessWidget {
                     ],
                   ),
                   BlocBuilder<PasswordBloc, PasswordState>(
-                    builder: (context, state) {
+                    builder: (passwordContext, state) {
                       return EmployeeFormField(
                         obscureText: state.obscureText,
                         labelText: 'Password',
@@ -63,7 +63,9 @@ class AdminScreen extends StatelessWidget {
                         suffixIcon: IconButton(
                             onPressed: () {
                               state.obscureText
-                                  ? context.read<PasswordBloc>().add(Visible())
+                                  ? passwordContext
+                                      .read<PasswordBloc>()
+                                      .add(Visible())
                                   : context
                                       .read<PasswordBloc>()
                                       .add(Invisible());
@@ -96,7 +98,7 @@ class AdminScreen extends StatelessWidget {
                     },
                   ),
                   BlocBuilder<LoadingBloc, LoadingState>(
-                    builder: (context1, state) {
+                    builder: (loadingContext, state) {
                       return state.isLoadnig
                           ? Padding(
                               padding: EdgeInsets.all(30.sp),
@@ -107,7 +109,9 @@ class AdminScreen extends StatelessWidget {
                               text: "Login",
                               onPress: () async {
                                 if (_formKey.currentState!.validate()) {
-                                  context1.read<LoadingBloc>().add(LoadingOn());
+                                  loadingContext
+                                      .read<LoadingBloc>()
+                                      .add(LoadingOn());
                                   try {
                                     _helper.loginAdmin(admin);
                                     if (await _helper.loginAdmin(admin)) {
@@ -130,7 +134,7 @@ class AdminScreen extends StatelessWidget {
                                               actions: [
                                                 ElevatedButton(
                                                   onPressed: () {
-                                                    context1
+                                                    loadingContext
                                                         .read<LoadingBloc>()
                                                         .add(LoadingOff());
                                                     Navigator.pop(context);
